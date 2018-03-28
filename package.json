@@ -1,0 +1,21 @@
+{
+	"name": "epicgames-fortnite-client",
+	"version": "0.1.0",
+	"description": "The javascript client for Fortnite.",
+	"main": "index.js",
+	"keywords": [
+		"epicgames",
+		"fortnite",
+		"client",
+		"api"
+	],
+	"author": {
+		"name": "Szymon Lisowiec",
+		"url": "https://kysune.me"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"request": "^2.85.0",
+		"epicgames-client": "^0.1.0"
+	}
+}
