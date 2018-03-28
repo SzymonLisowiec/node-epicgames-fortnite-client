@@ -105,7 +105,7 @@ class Client extends Events {
 
     /**
      * Geting stats of Battle Royale
-     * @param {string} username - account's id or username
+     * @param {string} id - account's id or display name
      * @param {string} time - weekly or alltime
      */
     async getStatsBR(username, time) {
@@ -113,17 +113,15 @@ class Client extends Events {
         time = ['weekly', 'alltime'].indexOf(time) > -1 ?  time : 'alltime';
 
         try {
-
-			let id = null;
 			
-			if(this.launcher.isUsername(username)){
+			if(this.launcher.isDisplayName(id)){
 
-				let account = await this.launcher.lookup(username);
+				let account = await this.launcher.lookup(id);
 				if(account)
 					id = account.id;
 				else return false;
 
-            }else id = username;
+            }
             
 			let { data } = await this.http.sendGet(
 				ENDPOINT.STATS + '/' + id + '/bulk/window/' + time,
