@@ -1,6 +1,6 @@
 {
 	"name": "epicgames-fortnite-client",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "The javascript client for Fortnite.",
 	"main": "index.js",
 	"keywords": [
@@ -9,6 +9,14 @@
 		"client",
 		"api"
 	],
+	"homepage": "https://github.com/SzymonLisowiec/node-epicgames-fortnite-client",
+	"bugs": {
+		"url": "https://github.com/SzymonLisowiec/node-epicgames-fortnite-client/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/SzymonLisowiec/node-epicgames-fortnite-client.git"
+	},
 	"author": {
 		"name": "Szymon Lisowiec",
 		"url": "https://kysune.me"
