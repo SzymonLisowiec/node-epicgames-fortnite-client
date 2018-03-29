@@ -39,6 +39,20 @@ eg.init().then(async (success) => {
 });
 ```
 
+# Constructor options
+```javascript
+const FortniteClient = require('epicgames-fortnite-client').Client;
+let fortnite = new FortniteClient({
+
+	use_waiting_room: true, //false to ignore waiting room (epicgames load balancer)
+
+	http: {
+		//settings for lib https://github.com/request/request
+	}
+
+});
+```
+
 # Methods
 
 ## init()

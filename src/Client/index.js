@@ -15,7 +15,8 @@ class Client extends Events {
 		super(config);
 
 		this.config = Object.assign({
-			
+            
+            use_waiting_room: false,
 			http: {}
 
         }, config || {});
@@ -38,11 +39,21 @@ class Client extends Events {
 	async init () {
 
         try {
-
-            let waiting_room = new WaitingRoom(ENDPOINT.WAITING_ROOM, this.http);
-
-            if(await waiting_room.needWait()){
-                //TODO: Show a time, which you have to wait.
+            
+            let wait = false;
+            if(this.config.use_waiting_room){
+                let waiting_room = new WaitingRoom(ENDPOINT.WAITING_ROOM, this.http);
+                wait = await waiting_room.needWait();
+            }
+    
+            if(wait){
+                    
+                this.launcher.debug.print('Problems with servers, need wait ' + wait.expected_wait + ' seconds.');
+                let sto = setTimeout(_ => {
+                    clearTimeout(sto);
+                    return this.init();
+                }, wait.expected_wait*1000);
+    
             }else{
 
                 let { err, data } = await this.http.sendGet(ENDPOINT.BASIC_DATA);
@@ -61,7 +72,9 @@ class Client extends Events {
 
         }catch(err){
 
-            console.log(err);
+            if(typeof err === 'object')
+                this.launcher.debug.print(err);
+            else this.launcher.debug.print(new Error(err));
 
         }
 
@@ -96,7 +109,7 @@ class Client extends Events {
 
         }catch(err){
 
-            console.log(err);
+            throw new Error(err);
 
         }
 
@@ -132,7 +145,7 @@ class Client extends Events {
 
 		}catch(err){
 
-			console.log(err);
+			this.launcher.debug.print(new Error(err));
 
 		}
 
