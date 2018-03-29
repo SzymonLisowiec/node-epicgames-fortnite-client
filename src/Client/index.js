@@ -121,7 +121,7 @@ class Client extends Events {
      * @param {string} id - account's id or display name
      * @param {string} time - weekly or alltime
      */
-    async getStatsBR(username, time) {
+    async getStatsBR(id, time) {
 
         time = ['weekly', 'alltime'].indexOf(time) > -1 ?  time : 'alltime';
 
