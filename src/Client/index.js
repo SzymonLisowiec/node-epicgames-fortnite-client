@@ -184,6 +184,63 @@ class Client extends Events {
 
 		return false;
 	}
+
+	/**
+     * Getting full store catalog
+     */
+    async getStoreCatalog() {
+
+        try {
+            
+			let { data } = await this.http.sendGet(
+				ENDPOINT.STOREFRONT_CATALOG,
+				this.auth.token_type + ' ' + this.auth.access_token
+			);
+
+			return data;
+
+		}catch(err){
+
+			this.launcher.debug.print(new Error(err));
+
+		}
+
+		return false;
+	}
+
+    /**
+     * Getting featured items in store
+     */
+    async getStoreFeaturedItems() {
+
+		let store = await this.getStoreCatalog();
+		
+		if(!store)
+			return false;
+
+		let storefront = store.storefronts.find(storefront => {
+			return storefront.name == 'BRWeeklyStorefront';
+		});
+		
+		return storefront.catalogEntries;
+	}
+
+    /**
+     * Getting daily items in store
+     */
+    async getStoreDailyItems() {
+
+		let store = await this.getStoreCatalog();
+		
+		if(!store)
+			return false;
+
+		let storefront = store.storefronts.find(storefront => {
+			return storefront.name == 'BRDailyStorefront';
+		});
+		
+		return storefront.catalogEntries;
+	}
 	
 	/**
      * Get list of tournaments

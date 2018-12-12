@@ -55,41 +55,56 @@ let fortnite = new FortniteClient({
 
 # Methods
 
-## init()
+## Generals
+
+### init()
 > Initialize client
 
-## login()
+### login()
 > Login to an account.
 
-## setLanguage(language)
+### setLanguage(language)
 > Sets language for client.
 * __language__ {_string_} - Language Code Identified e.g. `en-US`, `pl-PL` (or `pl`)
 
-## getStatsBR(id[, time='alltime'])
+### getSubgames()
+> Returns an object with all subgames (e.g. Battle Royale, Save The World, Creative) and last modified time.
+
+### getRawBasicData()
+> Returns all basic data. That informations are received while start game.
+
+### refreshBasicData()
+> Refreshing all basic data. You can use this after change client's language.
+
+### getStoreCatalog()
+> Returns raw fortnite store catalog (items possible to buy e.g. starter kit, battle pass)
+
+## Battle Royale (BR)
+
+### getNewsBR()
+> Returns an object with list of news for subgame Battle Royale and last modified time.
+
+### getStatsBR(id[, time='alltime'])
 > Returns an object of statistics for the Battle Royale mode. An object is divided on platforms with objects, which is divided on game's modes (solo/duo/squad).
 * __id__ {_string_} - account's id or display name
 * __time__ {_string_} - `weekly` or `alltime`
 
-## getTournaments()
+### getStoreFeaturedItems()
+> Returns list of store featured items
+
+### getStoreDailyItems()
+> Returns list of store daily items
+
+### getTournaments()
 > Returns an object with list of tournaments and last modified time.
 
-## getAllGameModes()
+### getAllGameModes()
 > Returns an object with list of all game modes and last modified time.
 
-## getNewsBR()
-> Returns an object with list of news for subgame Battle Royale and last modified time.
+## Save The World (PVE)
 
-## getNewsPVE()
+### getNewsPVE()
 > Returns an object with list of news for subgame Save The World and last modified time.
-
-## getSubgames()
-> Returns an object with all subgames (e.g. Battle Royale, Save The World, Creative) and last modified time.
-
-## getRawBasicData()
-> Returns all basic data. That informations are received while start game.
-
-## refreshBasicData()
-> Refreshing all basic data. You can use this after change client's language.
 
 # License
 MIT License
