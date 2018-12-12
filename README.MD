@@ -22,18 +22,18 @@ eg.init().then(async (success) => {
 		
 		if(await eg.login()){
 			
-            let fortnite = new FortniteClient(eg);
-
-            if(await fortnite.init()){
-                //`init` executing also login to account on which logged is `epicgames-client`
-    
-                let stats = await fortnite.getStatsBR('Kysune');
-                console.log(stats);
-    
-            }
-		
+			let fortnite = new FortniteClient(eg);
+			
+			if(await fortnite.init()){
+				//`init` executing also login to account on which logged is `epicgames-client`
+				
+				let stats = await fortnite.getStatsBR('Kysune');
+				console.log(stats);
+				
+			}
+			
 		}
-	
+		
 	}
 	
 });
