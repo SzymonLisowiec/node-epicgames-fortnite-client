@@ -81,6 +81,9 @@ let fortnite = new FortniteClient({
 ## getSubgames()
 > Returns an object with all subgames (e.g. Battle Royale, Save The World, Creative) and last modified time.
 
+## getRawBasicData()
+> Returns all basic data. That informations are received while start game.
+
 # License
 MIT License
 
