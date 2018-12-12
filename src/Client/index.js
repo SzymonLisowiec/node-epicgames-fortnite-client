@@ -63,7 +63,7 @@ class Client extends Events {
     
             }else{
 
-                let { err, data } = await this.http.sendGet(ENDPOINT.BASIC_DATA);
+                let { data } = await this.http.sendGet(ENDPOINT.BASIC_DATA);
                 
                 if(data){
                     
@@ -121,7 +121,33 @@ class Client extends Events {
         }
 
         return false;
-    }
+	}
+	
+	/**
+	 * Refreshing a basic data.
+	 */
+	async refreshBasicData () {
+
+        try {
+
+            let { data } = await this.http.sendGet(ENDPOINT.BASIC_DATA);
+                
+            if(data){
+				
+				this.basic_data = data;
+
+				return this.basic_data;
+
+			}
+
+        }catch(err){
+
+            this.launcher.debug.print(err);
+
+        }
+
+        return false;
+	}
 
     /**
      * Geting stats of Battle Royale

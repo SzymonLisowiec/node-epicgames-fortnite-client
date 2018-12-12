@@ -88,6 +88,9 @@ let fortnite = new FortniteClient({
 ## getRawBasicData()
 > Returns all basic data. That informations are received while start game.
 
+## refreshBasicData()
+> Refreshing all basic data. You can use this after change client's language.
+
 # License
 MIT License
 
