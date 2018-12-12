@@ -32,6 +32,13 @@ class Client extends Events {
         this.auth = null;
 
 	}
+
+	/**
+	 * Sets language for client
+	 */
+	setLanguage (iso_language) {
+		this.http.setHeader('Accept-Language', iso_language);
+	}
     
     /**
      * Initialize client.

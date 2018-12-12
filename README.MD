@@ -61,6 +61,10 @@ let fortnite = new FortniteClient({
 ## login()
 > Login to an account.
 
+## setLanguage(language)
+> Sets language for client.
+* __language__ {_string_} - Language Code Identified e.g. `en-US`, `pl-PL` (or `pl`)
+
 ## getStatsBR(id[, time='alltime'])
 > Returns an object of statistics for the Battle Royale mode. An object is divided on platforms with objects, which is divided on game's modes (solo/duo/squad).
 * __id__ {_string_} - account's id or display name
