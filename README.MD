@@ -106,6 +106,9 @@ let fortnite = new FortniteClient({
 ### getNewsPVE()
 > Returns an object with list of news for subgame Save The World and last modified time.
 
+### getWorldInfo()
+> Returns object with full info about locations, missions etc. You don't need bought subgame Save The World.
+
 # License
 MIT License
 

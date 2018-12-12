@@ -332,6 +332,29 @@ class Client extends Events {
 		return this.basic_data;
     }
 
+	/**
+     * Getting full info about locations, missions etc.
+     */
+    async getWorldInfo() {
+
+        try {
+            
+			let { data } = await this.http.sendGet(
+				ENDPOINT.WORLD_INFO,
+				this.auth.token_type + ' ' + this.auth.access_token
+			);
+
+			return data;
+
+		}catch(err){
+
+			this.launcher.debug.print(new Error(err));
+
+		}
+
+		return false;
+	}
+
 }
 
 module.exports = Client;
