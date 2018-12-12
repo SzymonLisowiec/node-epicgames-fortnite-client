@@ -19,7 +19,7 @@ class Http {
     }
 
     getUserAgent () {
-		return 'Fortnite/++Fortnite+Release-3.3-CL-3948073 Windows/6.2.9200.1.768.64bit';
+		return 'Fortnite/++Fortnite+Release-7.01-CL-4648651 Windows/10.0.17134.1.768.64bit';
 	}
 
     setHeader (name, value) {
@@ -49,7 +49,7 @@ class Http {
             if(typeof headers === 'object') options.headers = Object.assign(options.headers, headers);
 
             this.request(options, (err, response, body) => {
-
+				
                 if(err){
 
                     reject(err);

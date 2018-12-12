@@ -6,6 +6,7 @@ const Http = require('../Http');
 const WaitingRoom = require('epicgames-client').WaitingRoom;
 const LauncherEndpoint = require('epicgames-client').Endpoints;
 const StatsParser = require('../StatsParser');
+const Matchmaking = require('./Matchmaking');
 
 const FORTNITE_AUTHORIZATION = 'ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ=';
 
@@ -353,6 +354,15 @@ class Client extends Events {
 		}
 
 		return false;
+	}
+
+	/**
+     * Working in progress. If you want help, check file ./Matchmaking.js
+     */
+    async matchmaking(options) {
+
+		let mm = new Matchmaking(this, options);
+
 	}
 
 }
