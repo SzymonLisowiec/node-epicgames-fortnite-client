@@ -66,6 +66,21 @@ let fortnite = new FortniteClient({
 * __id__ {_string_} - account's id or display name
 * __time__ {_string_} - `weekly` or `alltime`
 
+## getTournaments()
+> Returns an object with list of tournaments and last modified time.
+
+## getAllGameModes()
+> Returns an object with list of all game modes and last modified time.
+
+## getNewsBR()
+> Returns an object with list of news for subgame Battle Royale and last modified time.
+
+## getNewsPVE()
+> Returns an object with list of news for subgame Save The World and last modified time.
+
+## getSubgames()
+> Returns an object with all subgames (e.g. Battle Royale, Save The World, Creative) and last modified time.
+
 # License
 MIT License
 

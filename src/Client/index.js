@@ -60,7 +60,7 @@ class Client extends Events {
                 
                 if(data){
                     
-                    this.basic_data = data;
+					this.basic_data = data;
 
                     let login = await this.login();
 
@@ -150,6 +150,96 @@ class Client extends Events {
 		}
 
 		return false;
+	}
+	
+	/**
+     * Get list of tournaments
+     */
+    getTournaments() {
+
+		if(!this.basic_data || !this.basic_data.tournamentinformation || !this.basic_data.tournamentinformation.tournament_info)
+			return false;
+
+		let result = {
+			list: this.basic_data.tournamentinformation.tournament_info.tournaments,
+			last_modified: new Date(this.basic_data.tournamentinformation.lastModified)
+		};
+
+		return result;
+	}
+	
+	/**
+     * Get list of all game modes
+     */
+    getAllGameModes() {
+
+		if(!this.basic_data || !this.basic_data.playlistinformation || !this.basic_data.playlistinformation.playlist_info)
+			return false;
+
+		let result = {
+			list: this.basic_data.playlistinformation.playlist_info.playlists,
+			last_modified: new Date(this.basic_data.playlistinformation.lastModified)
+		};
+
+		return result;
+	}
+
+	/**
+     * Get list of battle royale news
+     */
+    getNewsBR() {
+
+		if(!this.basic_data || !this.basic_data.battleroyalenews || !this.basic_data.battleroyalenews.news)
+			return false;
+
+		let result = {
+			list: this.basic_data.battleroyalenews.news.messages,
+			style: this.basic_data.battleroyalenews.style,
+			last_modified: new Date(this.basic_data.battleroyalenews.lastModified)
+		};
+
+		return result;
+	}
+
+	/**
+     * Get list of save the world news
+     */
+    getNewsPVE() {
+
+		if(!this.basic_data || !this.basic_data.savetheworldnews || !this.basic_data.savetheworldnews.news)
+			return false;
+
+		let result = {
+			list: this.basic_data.savetheworldnews.news.messages,
+			last_modified: new Date(this.basic_data.savetheworldnews.lastModified)
+		};
+
+		return result;
+	}
+
+	/**
+     * Get list of subgames (e.g. Battle Royale, Save The World, Creative)
+     */
+    getSubgames() {
+
+		if(!this.basic_data || !this.basic_data.subgameselectdata)
+			return false;
+
+		let result = Object.assign({}, this.basic_data.subgameselectdata);
+		delete result._locale;
+		delete result._title;
+		delete result._activeDate;
+		result.last_modified = new Date(result.lastModified);
+		delete result.lastModified;
+
+		return result;
+	}
+	
+	/**
+     * Get raw basic data (all basic informations e.g. tournaments, game modes is received while start game)
+     */
+    getRawBasicData() {
+		return this.basic_data;
     }
 
 }
