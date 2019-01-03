@@ -72,6 +72,10 @@ class Client extends Events {
 
                     let login = await this.login();
 
+					this.launcher.on('access_token_refreshed', _ => {
+						this.login(true);
+					});
+
                     return login;
 
                 }
@@ -92,9 +96,11 @@ class Client extends Events {
     /**
      * Login to account.
      */
-    async login () {
+    async login (is_refresh) {
 
         try {
+
+			this.launcher.debug.print('Fortnite: ' + (is_refresh ? 'Exchanging refreshed access token...' : 'Exchanging access token...'));
 
             let { code } = await this.launcher.account.auth.exchange();
 
@@ -109,7 +115,9 @@ class Client extends Events {
 
                 this.auth = data;
                 this.auth.expires_at = new Date(this.auth.expires_at);
-                this.auth.refresh_expires_at = new Date(this.auth.refresh_expires_at);
+				this.auth.refresh_expires_at = new Date(this.auth.refresh_expires_at);
+
+				this.launcher.debug.print('Fortnite: ' + (is_refresh ? 'Refreshed access token exchanged!' : 'Access token exchanged!'));
 
                 return true;
 
