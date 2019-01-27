@@ -57,8 +57,21 @@ class Http {
 
                 }
 
-                if(typeof body === 'object' && typeof body.errorCode != 'undefined')
-                    reject(body.errorCode);
+                if(typeof body === 'object' && typeof body.errorCode != 'undefined'){
+					
+					switch(body.errorCode){
+
+						case 'errors.com.epicgames.common.missing_action':
+							reject('errors.com.epicgames.common.missing_action (Probably you running game first time on this account. You have to first run game on original launcher. Unfortunately I don\'t know how to resolve it at the moment.)');
+							break;
+
+						default:
+							reject(body.errorCode);
+							break;
+
+					}
+					
+				}
 
                 resolve({
                     response,
