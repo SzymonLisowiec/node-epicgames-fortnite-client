@@ -27,7 +27,7 @@ class Client extends Events {
 		this.build = '4.20.0-3948073+++Fortnite+Release-3.3'; //TODO: Receive current version from EpicGames Launcher
         
         this.http = new Http(this.config.http);
-        this.http.setHeader('Accept-Language', 'en-EN');
+        this.http.setHeader('Accept-Language', this.launcher.http.getHeader('Accept-Language'));
 
         this.basic_data = null;
         this.auth = null;
@@ -118,6 +118,16 @@ class Client extends Events {
 				this.auth.refresh_expires_at = new Date(this.auth.refresh_expires_at);
 
 				this.launcher.debug.print('Fortnite: ' + (is_refresh ? 'Refreshed access token exchanged!' : 'Access token exchanged!'));
+
+				if(!is_refresh){
+					
+					await this.http.send(
+						'DELETE',
+						'https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/sessions/kill?killType=OTHERS_ACCOUNT_CLIENT_SERVICE',
+						this.auth.token_type + ' ' + this.auth.access_token
+					);
+					
+				}
 
                 return true;
 
