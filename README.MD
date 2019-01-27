@@ -6,6 +6,9 @@ The javascript client for Fortnite.
 npm i epicgames-fortnite-client
 ```
 
+# Do you need help?
+Check our discord server: https://discord.gg/HxGfuEx
+
 # Example
 ```javascript
 const EGClient = require('epicgames-client').Client;
