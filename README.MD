@@ -9,7 +9,7 @@ npm i epicgames-fortnite-client
 # Example
 ```javascript
 const EGClient = require('epicgames-client').Client;
-const FortniteClient = require('epicgames-fortnite-client').Client;
+const Fortnite = require('epicgames-fortnite-client');
 
 let eg = new EGClient({
     email: 'EMAIL',
@@ -18,31 +18,25 @@ let eg = new EGClient({
 
 eg.init().then(async (success) => {
 	
-	if(success){
-		
-		if(await eg.login()){
-			
-			let fortnite = new FortniteClient(eg);
-			
-			if(await fortnite.init()){
-				//`init` executing also login to account on which logged is `epicgames-client`
-				
-				let stats = await fortnite.getStatsBR('Kysune');
-				console.log(stats);
-				
-			}
-			
-		}
-		
-	}
+	if(!success)
+		throw new Error('Cannot initialize EpicGames launcher.');
+
+	if(!await eg.login())
+		throw new Error('Cannot login on EpicGames account.');
+
+	let fortnite = await eg.runGame(Fortnite);
+
+	let stats = await fortnite.getStatsBR('Kysune');
 	
+	console.dir(stats);
+
 });
 ```
 
 # Constructor options
 ```javascript
 const FortniteClient = require('epicgames-fortnite-client').Client;
-let fortnite = new FortniteClient({
+let fortnite = new FortniteClient(eg, {
 
 	use_waiting_room: true, //false to ignore waiting room (epicgames load balancer)
 
