@@ -106,6 +106,8 @@ let fortnite = new FortniteClient(eg, {
 ### getWorldInfo()
 > Returns object with full info about locations, missions etc. You don't need bought subgame Save The World.
 
+## Creative Mode
+
 ### getCreativeWorld(code)
 > Returns informations about creative world.
 * __code__ {_string_} - creative world's share code
