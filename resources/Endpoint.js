@@ -5,6 +5,8 @@ module.exports = Object.freeze({
 	STATS: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/stats/accountId',
 	STOREFRONT_CATALOG: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/storefront/v2/catalog', // ?rvn=4
 
+	CREATIVE_FAVORITES: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/creative/favorites', //  /{{account_id}}/{{world_code}}?limit=30
+
 	WORLD_INFO: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/world/info',
 	// XMPP wss://notifications-service-prod06.ol.epicgames.com:443.ol.epicgames.com/stomp
 	/**
@@ -43,6 +45,7 @@ module.exports = Object.freeze({
 	 * 
 	 * MATCHMAKING_SESSION_FIND_PLAYER
 	 * Everytime empty json response: []
+	 * According to https://github.com/Vrekt this endpoint seems to be related to PVE.
 	 * 
 	 * 
 	 * MATCHMAKING_SESSION
