@@ -23,7 +23,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"epicgames-client": "^1.1.6",
+		"epicgames-client": "^1.2.1",
 		"request": "^2.88.0",
 		"websocket": "^1.0.28"
 	}
