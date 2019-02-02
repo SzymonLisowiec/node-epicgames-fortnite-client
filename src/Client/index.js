@@ -3,10 +3,10 @@ const ENDPOINT = require('../../resources/Endpoint');
 const Events = require('events');
 const request = require('request');
 const Http = require('../Http');
-const WaitingRoom = require('epicgames-client').WaitingRoom;
-const LauncherEndpoint = require('epicgames-client').Endpoints;
+const { WaitingRoom, Endpoints: LauncherEndpoint, User } = require('epicgames-client');
 const StatsParser = require('../StatsParser');
 const Matchmaking = require('./Matchmaking');
+const CreativeWorld = require('./CreativeWorld');
 
 const FORTNITE_AUTHORIZATION = 'ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ=';
 
@@ -381,6 +381,44 @@ class Client extends Events {
 
 		let mm = new Matchmaking(this, options);
 
+	}
+
+	getCreativeWorld (code) {
+		return CreativeWorld.getByCode(this, code);
+	}
+
+	async getFavoriteCreativeWorlds () {
+		
+		try {
+            
+			let { data } = await this.http.sendGet(
+				ENDPOINT.CREATIVE_FAVORITES + '/' + this.launcher.account.id + '?limit=30', // TODO: Add pagination
+				this.auth.token_type + ' ' + this.auth.access_token
+			);
+
+			data = data.results.map(result => {
+				return new CreativeWorld(this, {
+					code: result.linkData.mnemonic,
+					author: new User(this.launcher, {
+						account_id: result.linkData.accountId,
+						display_name: result.linkData.creatorName
+					}),
+					title: result.linkData.metadata.title,
+					description: result.linkData.metadata.tagline,
+					type: result.linkData.metadata.islandType,
+					locale: result.linkData.metadata.locale,
+				});
+			});
+
+			return data;
+
+		}catch(err){
+
+			this.launcher.debug.print(new Error(err));
+
+		}
+
+		return false;
 	}
 
 }
