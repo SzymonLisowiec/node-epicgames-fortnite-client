@@ -26,7 +26,7 @@ class Client extends Events {
         
         this.launcher = launcher;
 
-		this.build = '4.20.0-3948073+++Fortnite+Release-3.3'; //TODO: Receive current version from EpicGames Launcher
+		this.build = '4.22.0-4834550+++Fortnite+Release-7.30'; //TODO: Receive current version from EpicGames Launcher
         
         this.http = new Http(this.config.http);
         this.http.setHeader('Accept-Language', this.launcher.http.getHeader('Accept-Language'));
