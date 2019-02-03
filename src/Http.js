@@ -19,7 +19,7 @@ class Http {
     }
 
     getUserAgent () {
-		return 'Fortnite/++Fortnite+Release-7.01-CL-4648651 Windows/10.0.17134.1.768.64bit';
+		return 'Fortnite/++Fortnite+Release-7.30-CL-4834550 Windows/10.0.17134.1.768.64bit';
 	}
 
     setHeader (name, value) {
