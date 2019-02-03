@@ -1,6 +1,8 @@
 # node-epicgames-fortnite-client
 The javascript client for Fortnite.
 
+__This library supports only fortnite client. If you need launcher, check [`node-epicgames-client`](https://github.com/SzymonLisowiec/node-epicgames-client)__
+
 # Installation
 ```
 npm i epicgames-fortnite-client
@@ -114,6 +116,11 @@ let fortnite = new FortniteClient(eg, {
 
 ### getFavoriteCreativeWorlds()
 > Returns list of your creative worlds.
+
+
+# Communicator
+Communicator is same as in [`node-epicgames-client`](https://github.com/SzymonLisowiec/node-epicgames-client#communicator). __When you has run a game, launcher's communicator has been ignoring, because game's communicator have higher priority.__
+
 
 # Classes
 
