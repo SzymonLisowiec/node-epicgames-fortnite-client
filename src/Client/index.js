@@ -1,9 +1,8 @@
 const ENDPOINT = require('../../resources/Endpoint');
 
 const Events = require('events');
-const request = require('request');
 const Http = require('../Http');
-const { WaitingRoom, Endpoints: LauncherEndpoint, User } = require('epicgames-client');
+const { WaitingRoom, Endpoints: LauncherEndpoint, User, Communicator } = require('epicgames-client');
 const StatsParser = require('../StatsParser');
 const Matchmaking = require('./Matchmaking');
 const CreativeWorld = require('./CreativeWorld');
@@ -14,6 +13,9 @@ class Client extends Events {
 
 	constructor (launcher, config) {
 		super(config);
+		
+		this.app_name = 'Fortnite';
+		this.app_xmpp_name = 'Fortnite';
 
 		this.config = Object.assign({
             
@@ -30,7 +32,8 @@ class Client extends Events {
         this.http.setHeader('Accept-Language', this.launcher.http.getHeader('Accept-Language'));
 
         this.basic_data = null;
-        this.auth = null;
+		this.auth = null;
+		this.communicator = null;
 
 	}
 
@@ -70,10 +73,15 @@ class Client extends Events {
                     
 					this.basic_data = data;
 
-                    let login = await this.login();
+					let login = await this.login();
+					
+					this.communicator = new Communicator(this);
+					await this.communicator.connect(this.auth.access_token);
 
-					this.launcher.on('access_token_refreshed', _ => {
-						this.login(true);
+					this.launcher.on('access_token_refreshed', async _ => {
+						await this.login(true);
+						await this.communicator.disconnect();
+						await this.communicator.connect(this.auth.access_token);
 					});
 
                     return login;
