@@ -37,7 +37,7 @@ class Http {
 
         return new Promise((resolve, reject) => {
             
-            let options = Object.assign(this.options, {
+            let options = Object.assign({}, this.options, {
                 url
             });
             
@@ -61,9 +61,9 @@ class Http {
 					
 					switch(body.errorCode){
 
-						case 'errors.com.epicgames.common.missing_action':
-							reject('errors.com.epicgames.common.missing_action (Probably you running game first time on this account. You have to first run game on original launcher. Unfortunately I don\'t know how to resolve it at the moment.)');
-							break;
+						// case 'errors.com.epicgames.common.missing_action':
+						// 	reject('errors.com.epicgames.common.missing_action (Probably you running game first time on this account. You have to first run game on original launcher. Unfortunately I don\'t know how to resolve it at the moment.)');
+						// 	break;
 
 						default:
 							reject(body.errorCode);

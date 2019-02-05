@@ -74,6 +74,30 @@ class Client extends Events {
 					this.basic_data = data;
 
 					let login = await this.login();
+
+					let { data: common_public } = await this.http.send(
+						'POST',
+						'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/profile/' + this.launcher.account.id + '/client/QueryProfile?profileId=common_public&rvn=-1',
+						this.auth.token_type + ' ' + this.auth.access_token,
+						{
+							rev: 1,
+							version: 'fortnite_start@w=9'
+						}
+					);
+
+					// TODO: Support for receives data `common_public`
+				
+					let { data: common_core } = await this.http.send(
+						'POST',
+						'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/profile/' + this.launcher.account.id + '/client/QueryProfile?profileId=common_core&rvn=-1',
+						this.auth.token_type + ' ' + this.auth.access_token,
+						{
+							rev: 2259,
+							version: 'fortnite_start@w=9'
+						}
+					);
+
+					// TODO: Support for receives data `common_core`
 					
 					this.communicator = new Communicator(this);
 					await this.communicator.connect(this.auth.access_token);
