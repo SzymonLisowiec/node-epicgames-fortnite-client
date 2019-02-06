@@ -16,6 +16,7 @@ class Client extends Events {
 		
 		this.app_name = 'Fortnite';
 		this.app_xmpp_name = 'Fortnite';
+		this.library_name = 'epicgames-fortnite-client';
 
 		this.config = Object.assign({
             
@@ -33,6 +34,7 @@ class Client extends Events {
 
         this.basic_data = null;
 		this.auth = null;
+
 		this.communicator = null;
 
 	}
