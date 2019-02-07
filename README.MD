@@ -1,5 +1,9 @@
 # node-epicgames-fortnite-client
-The javascript client for Fortnite.
+### Unofficial Fortnite client in javascript.
+[![npm version](https://img.shields.io/npm/v/epicgames-fortnite-client.svg)](https://npmjs.com/package/epicgames-fortnite-client)
+[![npm downloads](https://img.shields.io/npm/dm/epicgames-fortnite-client.svg)](https://npmjs.com/package/epicgames-fortnite-client)
+[![license](https://img.shields.io/npm/l/epicgames-fortnite-client.svg)](https://github.com/SzymonLisowiec/node-epicgames-fortnite-client/blob/master/LICENSE.MD)
+[![paypal](https://img.shields.io/badge/paypal-donate-orange.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FDN57KFYRP4CQ&source=url)
 
 __This library supports only fortnite client. If you need launcher, check [`node-epicgames-client`](https://github.com/SzymonLisowiec/node-epicgames-client)__
 
