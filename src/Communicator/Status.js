@@ -55,17 +55,19 @@ class Status extends LauncherStatus {
 			}
 
 		};
-		
-		this.party = new Party(this.communicator, this.party_join_data);
 
 	}
 
 	async joinToParty () {
 		
-		if(!this.party)
+		if(!this.party_join_data)
 			return false;
 
-		return this.party.askToJoin(this.sender.jid);
+		let party = new Party(this.communicator, this.party_join_data);
+
+		await this.party.askToJoin(this.sender.jid);
+
+		return party;
 	}
 
 }
