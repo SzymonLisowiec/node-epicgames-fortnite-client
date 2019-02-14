@@ -20,14 +20,14 @@ class Status extends LauncherStatus {
 
     this.fortnite = {
 
-      basic_info: this.properties.FortBasicInfo_j ? {
-        home_base_rating: this.properties.FortBasicInfo_j.homeBaseRating,
+      basicInfo: this.properties.FortBasicInfo_j ? {
+        homeBaseRating: this.properties.FortBasicInfo_j.homeBaseRating,
       } : null,
 
       lfg: this.properties.FortLFG_I,
-      party_size: this.properties.FortPartSize_i,
-      subgame: this.properties.FortSubGame_i,
-      in_unjoinable_match: this.properties.InUnjoinableMatch_b,
+      partySize: this.properties.FortPartSize_i,
+      subGame: this.properties.FortSubGame_i,
+      inUnjoinableMatch: this.properties.InUnjoinableMatch_b,
 
     };
 
@@ -37,19 +37,19 @@ class Status extends LauncherStatus {
     
     party = this.properties[party];
     
-    this.party_join_data = {
+    this.partyJoinData = {
       
-      party_id: party.partyId,
-      party_type_id: party.partyTypeId,
-      access_key: party.key,
-      app_id: party.appId,
-      build_id: party.buildId,
-      party_flags: party.partyFlags,
-      not_accepting_reason: party.notAcceptingReason,
+      partyId: party.partyId,
+      partyTypeId: party.partyTypeId,
+      accessKey: party.key,
+      appId: party.appId,
+      buildId: party.buildId,
+      partyFlags: party.partyFlags,
+      notAcceptingReason: party.notAcceptingReason,
 
       source: {
-        account_id: party.sourceId,
-        display_name: party.sourceDisplayName,
+        accountAd: party.sourceId,
+        displayName: party.sourceDisplayName,
         platform: party.sourcePlatform,
       },
 
@@ -59,9 +59,9 @@ class Status extends LauncherStatus {
 
   async joinToParty() {
     
-    if (!this.party_join_data) return false;
+    if (!this.partyJoinData) return false;
 
-    const party = new Party(this.communicator, this.party_join_data);
+    const party = new Party(this.communicator, this.partyJoinData);
 
     await this.party.askToJoin(this.sender.jid);
 
