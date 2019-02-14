@@ -1,85 +1,83 @@
 const ENDPOINT = require('../../resources/Endpoint');
-const { User } = require('epicgames-client');
 
 class CreativeWorld {
 
-	constructor (fn, data) {
+  constructor(fn, data) {
 
-		this.fn = fn;
+    this.fn = fn;
 
-		this.code = data.code || undefined;
-		this.author = data.author || undefined;
-		this.title = data.title || undefined;
-		this.description = data.description || undefined;
-		this.type = data.type || undefined;
-		this.locale = data.locale || undefined;
+    this.code = data.code || null;
+    this.title = data.title || null;
+    this.description = data.description || null;
+    this.type = data.type || null;
+    this.locale = data.locale || null;
+    this.creatorTag = data.creatorTag || null;
 
-	}
+  }
 
-	async addToFavorites () {
+  async addToFavorites() {
 
-		if(!this.code)
-			return false;
+    if (!this.code) return false;
 
-		try {
+    try {
             
-			let { data } = await this.fn.http.send(
-				'PUT',
-				ENDPOINT.CREATIVE_FAVORITES + '/' +  this.fn.launcher.account.id + '/' + this.code,
-				this.fn.auth.token_type + ' ' + this.fn.auth.access_token
-			);
+      await this.fn.http.send(
+        'PUT',
+        `${ENDPOINT.CREATIVE_FAVORITES}/${this.fn.launcher.account.id}/${this.code}`,
+        `${this.fn.auth.token_type} ${this.fn.auth.access_token}`,
+      );
 
-			return true;
+      return true;
 
-		}catch(err){
+    } catch (err) {
 
-			this.fn.launcher.debug.print(new Error(err));
-			
-		}
+      this.fn.launcher.debug.print(new Error(err));
 
-		return false;
-	}
+    }
 
-	static async getByCode (fn, code) {
-		
-		try {
+    return false;
+  }
 
-			let { response: { body } } = await fn.http.sendGet('https://www.epicgames.com/fn/' + code, null, {}, false);
-			let state = null;
+  static async getByCode(fn, code) {
 
-			try {
-				
-				state = JSON.parse((/\<script\>\s{0,}window\.\_\_epic\_client\_state\s{0,}\=\s{0,}(.*)\s{0,}\;\s{0,}\n{0,}\s{0,}window\./g).exec(body)[1]);
+    try {
 
-			}catch(err){
-				
-				fn.launcher.debug.print(new Error('Cannot get react state of https://www.epicgames.com/fn/' + code));
+      const { response: { body } } = await fn.http.sendGet(`https://www.epicgames.com/fn/${code}`, null, null, false);
+      let state = null;
 
-			}
-			
-			if(state && state.CreativeModeStore.code.success){
-				
-				return new this(fn, {
-					code,
-					author: await User.get(fn.launcher, state.CreativeModeStore.code.displayName),
-					title: state.CreativeModeStore.code.data.title,
-					description: state.CreativeModeStore.code.data.tagline,
-					type: state.CreativeModeStore.code.data.islandType,
-					locale: state.CreativeModeStore.code.data.locale
-				});
+      try {
+        
+        state = JSON.parse((/<script>\s{0,}window\.__epic_client_state\s{0,}=\s{0,}(.*)\s{0,};\s{0,}\n{0,}\s{0,}window\./g).exec(body)[1]);
 
-			}
+      } catch (err) {
+        
+        fn.launcher.debug.print(new Error(`Cannot get react state of https://www.epicgames.com/fn/${code}`));
 
-		}catch(err){
+      }
+      
+      if (state && state.CreativeModeStore.code.success) {
+        
+        return new this(fn, {
+          code,
+          creatorTag: state.CreativeModeStore.code.displayName,
+          title: state.CreativeModeStore.code.data.title,
+          description: state.CreativeModeStore.code.data.tagline,
+          type: state.CreativeModeStore.code.data.islandType,
+          locale: state.CreativeModeStore.code.data.locale,
+        });
 
-			fn.launcher.debug.print(err);
-			fn.launcher.debug.print(new Error('Cannot get creative world with code: ' + code));
+      }
 
-		}
+    } catch (err) {
 
-		return false;
-	}
-	
+      fn.launcher.debug.print(err);
+      fn.launcher.debug.print(new Error(`Cannot get creative world with code: ${code}`));
+
+    }
+
+    return false;
+  }
+  
 }
 
 module.exports = CreativeWorld;

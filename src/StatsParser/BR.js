@@ -1,41 +1,78 @@
-module.exports = (stats) => {
+/* eslint-disable import/no-dynamic-require */
 
-    let result = {};
+const launcherPackageName = process.env.KYSUNE_EPICGAMES_CLIENT || 'epicgames-client';
+
+const { EInputType } = require(`${launcherPackageName}`);
+
+class BR {
+
+  constructor(app) {
+
+    this.app = app;
+    this.client = app.launcher;
+
+  }
+
+  parse(data, selectedInputType) {
+
+    if (!data) return false;
+
+    const result = {};
+  
+    const { stats } = data;
     
-    for(let i in stats){
+    Object.keys(stats).forEach((param) => {
 
-        let stat = stats[i];
-        let parts = stat.name.match(/^(.*?)_(.*?)_(.*?)_(.*?)_(.*?)$/);
+      let paramValue = stats[param];
 
-        if(parts.length === 6){
+      param = param.split('_');
 
-            let br = parts[1]; // It seems, that everytime is `br`. Maybe `br` means "Battle Royale", but the "Save the World" mode have separately statistics.
-            let name = parts[2];
-            let platform = parts[3];
-            let m = parts[4]; // I don't know, what is this. It seems, that everytime is `m0`
-            let mode = parts[5];
+      const subGame = param[0];
+      const paramName = this.rename(param[1]);
+      const inputType = this.readInputType(param[2]);
+      const playlist = param[5];
+      const playlistMode = param[6];
 
-            switch (mode) {
-                case 'p2': mode = 'solo'; break;
-                case 'p10': mode = 'duo'; break;
-                case 'p9': mode = 'squad'; break;
-                default: console.log(new Error('Unknow mode of stat. Mode: ' + mode)); break;
-            }
+      if (subGame !== 'br') return;
 
-            if(typeof result[platform] === 'undefined')
-                result[platform] = {};
+      if (typeof result[inputType] === 'undefined') result[inputType] = {};
+      if (typeof result[inputType][playlist] === 'undefined') result[inputType][playlist] = {};
+      if (playlistMode && typeof result[inputType][playlist][playlistMode] === 'undefined') result[inputType][playlist][playlistMode] = {};
 
-            if(typeof result[platform][mode] === 'undefined')
-                result[platform][mode] = {};
+      if (paramName === 'lastModified') paramValue = new Date(paramValue * 1000);
+      
+      if (playlistMode) result[inputType][playlist][playlistMode][paramName] = paramValue;
+      else result[inputType][playlist][paramName] = paramValue;
+    });
+    
+    return typeof selectedInputType === 'number' ? result[selectedInputType] : result;
+  }
 
-            if(name === 'lastmodified')
-                stat.value = new Date(stat.value * 1000);
-
-            result[platform][mode][name] = stat.value;
-
-        }
-
+  rename(name) {
+    switch (name) {
+      case 'placetop6': return 'placeTop6';
+      case 'placetop25': return 'placeTop25';
+      case 'placetop1': return 'placeTop1';
+      case 'matchesplayed': return 'matchesPlayed';
+      case 'lastmodified': return 'lastModified';
+      case 'minutesplayed': return 'minutesPlayed';
+      case 'playersoutlived': return 'playersOutLived';
+      case 'placetop10': return 'placeTop10';
+      case 'placetop12': return 'placeTop12';
+      case 'placetop3': return 'placeTop3';
+      default: return name;
     }
+  }
 
-    return result;
-};
+  readInputType(inputType) {
+    switch (inputType) {
+      case 'keyboardmouse': return EInputType.MouseAndKeyboard;
+      case 'controller': return EInputType.Controller;
+      case 'touch': return EInputType.Touch;
+      default: return inputType;
+    }
+  }
+
+}
+
+module.exports = BR;

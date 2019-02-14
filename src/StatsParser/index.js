@@ -1,4 +1,5 @@
+/* eslint-disable global-require */
+
 module.exports = {
-    BR: require('./BR'),
-    PVE: require('./PVE')
+  BR: require('./BR'),
 };
