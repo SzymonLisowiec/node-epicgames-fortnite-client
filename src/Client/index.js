@@ -61,11 +61,11 @@ class Client extends Events {
     
       if (wait) {
                     
-        this.launcher.debug.print(`Problems with servers, need wait ${wait.expected_wait} seconds.`);
+        this.launcher.debug.print(`Problems with servers, need wait ${wait.expectedWait} seconds.`);
         const sto = setTimeout(() => {
           clearTimeout(sto);
           return this.init();
-        }, wait.expected_wait * 1000);
+        }, wait.expectedWait * 1000);
     
       } else {
 
@@ -80,7 +80,7 @@ class Client extends Events {
           /* const { data: common_public } = */await this.http.send(
             'POST',
             `https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/profile/${this.launcher.account.id}/client/QueryProfile?profileId=common_public&rvn=-1`,
-            `${this.auth.token_type} ${this.auth.access_token}`,
+            `${this.auth.tokenType} ${this.auth.accessToken}`,
             {
               rev: 1,
               version: 'fortnite_start@w=9',
@@ -92,7 +92,7 @@ class Client extends Events {
           /* const { data: common_core } = */await this.http.send(
             'POST',
             `https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/profile/${this.launcher.account.id}/client/QueryProfile?profileId=common_core&rvn=-1`,
-            `${this.auth.token_type} ${this.auth.access_token}`,
+            `${this.auth.tokenType} ${this.auth.accessToken}`,
             {
               rev: 2259,
               version: 'fortnite_start@w=9',
@@ -102,12 +102,12 @@ class Client extends Events {
           // TODO: Support for receives data `common_core`
           
           this.communicator = new Communicator(this);
-          await this.communicator.connect(this.auth.access_token);
+          await this.communicator.connect(this.auth.accessToken);
 
           this.launcher.on('access_token_refreshed', async () => {
             await this.login(true);
             await this.communicator.disconnect();
-            await this.communicator.connect(this.auth.access_token);
+            await this.communicator.connect(this.auth.accessToken);
           });
 
           return login;
@@ -142,10 +142,23 @@ class Client extends Events {
           includePerms: false,
           token_type: 'eg1',
         });
-
-        this.auth = data;
-        this.auth.expires_at = new Date(this.auth.expires_at);
-        this.auth.refresh_expires_at = new Date(this.auth.refresh_expires_at);
+        
+        this.auth = {
+          accessToken: data.access_token,
+          expiresIn: data.expires_in,
+          expiresAt: new Date(data.expires_at),
+          tokenType: data.token_type,
+          refreshToken: data.refresh_token,
+          refreshExpires: data.refresh_expires,
+          refreshExpiresAt: new Date(data.refresh_expires_at),
+          accountId: data.account_id,
+          clientId: data.client_id,
+          internalClient: data.internal_client,
+          clientService: data.client_service,
+          app: data.pp,
+          inAppId: data.in_app_id,
+          deviceId: data.device_id,
+        };
 
         this.launcher.debug.print(`Fortnite: ${isRefresh ? 'Refreshed access token exchanged!' : 'Access token exchanged!'}`);
 
@@ -154,7 +167,7 @@ class Client extends Events {
           await this.http.send(
             'DELETE',
             'https://account-public-service-prod03.ol.epicgames.com/account/api/oauth/sessions/kill?killType=OTHERS_ACCOUNT_CLIENT_SERVICE',
-            `${this.auth.token_type} ${this.auth.access_token}`,
+            `${this.auth.tokenType} ${this.auth.accessToken}`,
           );
           
         }
@@ -209,7 +222,7 @@ class Client extends Events {
 
       const { data } = await this.http.sendGet(
         `${ENDPOINT.STATSV2}/${id}`,
-        `${this.auth.token_type} ${this.auth.access_token}`,
+        `${this.auth.tokenType} ${this.auth.accessToken}`,
       );
       
       return (new StatsParserBR(this)).parse(data, inputType);
@@ -229,7 +242,7 @@ class Client extends Events {
             
       const { data } = await this.http.sendGet(
         ENDPOINT.STOREFRONT_CATALOG,
-        `${this.auth.token_type} ${this.auth.access_token}`,
+        `${this.auth.tokenType} ${this.auth.accessToken}`,
       );
 
       return data;
@@ -275,7 +288,7 @@ class Client extends Events {
 
     const result = {
       list: this.basicData.tournamentinformation.tournament_info.tournaments,
-      last_modified: new Date(this.basicData.tournamentinformation.lastModified),
+      lastModified: new Date(this.basicData.tournamentinformation.lastModified),
     };
 
     return result;
@@ -291,7 +304,7 @@ class Client extends Events {
 
     const result = {
       list: this.basicData.playlistinformation.playlist_info.playlists,
-      last_modified: new Date(this.basicData.playlistinformation.lastModified),
+      lastModified: new Date(this.basicData.playlistinformation.lastModified),
     };
 
     return result;
@@ -308,7 +321,7 @@ class Client extends Events {
     const result = {
       list: this.basicData.battleroyalenews.news.messages,
       style: this.basicData.battleroyalenews.style,
-      last_modified: new Date(this.basicData.battleroyalenews.lastModified),
+      lastModified: new Date(this.basicData.battleroyalenews.lastModified),
     };
 
     return result;
@@ -324,7 +337,7 @@ class Client extends Events {
 
     const result = {
       list: this.basicData.savetheworldnews.news.messages,
-      last_modified: new Date(this.basicData.savetheworldnews.lastModified),
+      lastModified: new Date(this.basicData.savetheworldnews.lastModified),
     };
 
     return result;
@@ -344,7 +357,7 @@ class Client extends Events {
     delete result._title;
     // eslint-disable-next-line no-underscore-dangle
     delete result._activeDate;
-    result.last_modified = new Date(result.lastModified);
+    result.lastModified = new Date(result.lastModified);
     delete result.lastModified;
 
     return result;
@@ -360,7 +373,7 @@ class Client extends Events {
             
       const { data } = await this.http.sendGet(
         ENDPOINT.WORLD_INFO,
-        `${this.auth.token_type} ${this.auth.access_token}`,
+        `${this.auth.tokenType} ${this.auth.accessToken}`,
       );
 
       return data;
@@ -384,14 +397,14 @@ class Client extends Events {
             
       let { data } = await this.http.sendGet(
         `${ENDPOINT.CREATIVE_FAVORITES}/${this.launcher.account.id}?limit=30`, // TODO: Add pagination
-        `${this.auth.token_type} ${this.auth.access_token}`,
+        `${this.auth.tokenType} ${this.auth.accessToken}`,
       );
 
       data = data.results.map(result => new CreativeWorld(this, {
         code: result.linkData.mnemonic,
         author: new User(this.launcher, {
-          account_id: result.linkData.accountId,
-          display_name: result.linkData.creatorName,
+          accountId: result.linkData.accountId,
+          displayName: result.linkData.creatorName,
         }),
         title: result.linkData.metadata.title,
         description: result.linkData.metadata.tagline,
