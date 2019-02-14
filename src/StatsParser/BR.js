@@ -67,7 +67,7 @@ class BR {
   readInputType(inputType) {
     switch (inputType) {
       case 'keyboardmouse': return EInputType.MouseAndKeyboard;
-      case 'controller': return EInputType.Controller;
+      case 'gamepad': return EInputType.Controller;
       case 'touch': return EInputType.Touch;
       default: return inputType;
     }
