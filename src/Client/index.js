@@ -2,6 +2,8 @@ const Events = require('events');
 const ENDPOINT = require('../../resources/Endpoint');
 
 const Http = require('../Http');
+const Item = require('./Item');
+const Inventory = require('./Inventory');
 
 const {
   WaitingRoom, Endpoints: LauncherEndpoint, User, Communicator,
@@ -39,10 +41,81 @@ class Client extends Events {
     this.http.setHeader('Accept-Language', this.launcher.http.getHeader('Accept-Language'));
 
     this.basicData = null;
+    this.commonCore = {};
+    this.commonPublic = {};
+    this.inventory = new Inventory(this, []);
+
     this.auth = null;
 
     this.communicator = null;
 
+  }
+
+  get giftsHistory() {
+    return this.commonCore.profileChanges[0].profile.stats.attributes.gift_history.gifts.map(gift => ({
+      offerId: gift.offerId,
+      toAccountId: gift.toAccountId,
+      time: new Date(gift.date),
+    }));
+  }
+
+  get countOfSentGifts() {
+    return this.commonCore.profileChanges[0].profile.stats.attributes.gift_history.num_sent;
+  }
+
+  get countOfReceivedGifts() {
+    return this.commonCore.profileChanges[0].profile.stats.attributes.gift_history.num_received;
+  }
+
+  get canSendGifts() {
+    return this.commonCore.profileChanges[0].profile.stats.attributes.allowed_to_send_gifts;
+  }
+
+  get canReceiveGifts() {
+    return this.commonCore.profileChanges[0].profile.stats.attributes.allowed_to_receive_gifts;
+  }
+
+  get usedCreatorTag() {
+    if (!this.commonCore.profileChanges[0].profile.stats.attributes.mtx_affiliate) return false;
+    return {
+      name: this.commonCore.profileChanges[0].profile.stats.attributes.mtx_affiliate,
+      lastModified: this.commonCore.profileChanges[0].profile.stats.attributes.mtx_affiliate_set_time,
+    };
+  }
+
+  get countUsedRefunds() {
+    return this.commonCore.profileChanges[0].profile.stats.attributes.mtx_purchase_history.refundsUsed;
+  }
+
+  get countPossibleRefunds() {
+    return this.commonCore.profileChanges[0].profile.stats.attributes.mtx_purchase_history.refundCredits;
+  }
+
+  get purchasesHistory() {
+    return this.commonCore.profileChanges[0].profile.stats.attributes.mtx_purchase_history.purchases.map(purchase => ({
+      purchaseId: purchase.purchaseId,
+      offerId: purchase.offerId,
+      purchaseDate: new Date(purchase.purchaseDate),
+      refundDate: purchase.refundDate ? new Date(purchase.refundDate) : null,
+      isRefunded: !!purchase.refundDate,
+      fulfillments: purchase.fulfillments,
+      paid: purchase.totalMtxPaid,
+      lootResult: purchase.lootResult.map(item => new Item(this, {
+        id: item.itemGuid,
+        templateId: item.itemType,
+        // itemProfile: item.itemProfile,
+        quantity: item.quantity,
+      })),
+    }));
+  }
+
+  get PVEBase() {
+    if (!this.commonPublic.profileChanges[0].profile.stats.attributes.homebase_name) return false;
+    return {
+      name: this.commonPublic.profileChanges[0].profile.stats.attributes.homebase_name,
+      bannerColor: this.commonPublic.profileChanges[0].profile.stats.attributes.banner_color,
+      bannerIcon: this.commonPublic.profileChanges[0].profile.stats.attributes.banner_icon,
+    };
   }
 
   setLanguage(language) {
@@ -77,7 +150,7 @@ class Client extends Events {
 
           const login = await this.login();
 
-          /* const { data: common_public } = */await this.http.send(
+          const { data: commonPublic } = await this.http.send(
             'POST',
             `https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/profile/${this.launcher.account.id}/client/QueryProfile?profileId=common_public&rvn=-1`,
             `${this.auth.tokenType} ${this.auth.accessToken}`,
@@ -87,9 +160,9 @@ class Client extends Events {
             },
           );
 
-          // TODO: Support for receives data `common_public`
+          this.commonPublic = commonPublic;
         
-          /* const { data: common_core } = */await this.http.send(
+          const { data: commonCore } = await this.http.send(
             'POST',
             `https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/profile/${this.launcher.account.id}/client/QueryProfile?profileId=common_core&rvn=-1`,
             `${this.auth.tokenType} ${this.auth.accessToken}`,
@@ -99,7 +172,13 @@ class Client extends Events {
             },
           );
 
-          // TODO: Support for receives data `common_core`
+          this.commonCore = commonCore;
+          this.inventory.addItems(Object.keys(this.commonCore.profileChanges[0].profile.items).map(
+            id => new Item(this, {
+              ...this.commonCore.profileChanges[0].profile.items[id],
+              id,
+            }),
+          ));
           
           this.communicator = new Communicator(this);
           await this.communicator.connect(this.auth.accessToken);
@@ -142,7 +221,7 @@ class Client extends Events {
           includePerms: false,
           token_type: 'eg1',
         });
-        
+
         this.auth = {
           accessToken: data.access_token,
           expiresIn: data.expires_in,
@@ -287,14 +366,41 @@ class Client extends Events {
     ) return false;
 
     const result = {
-      list: this.basicData.tournamentinformation.tournament_info.tournaments,
+      list: this.basicData.tournamentinformation.tournament_info.tournaments.map(item => ({
+        tournamentDisplayId: item.tournament_display_id,
+        titleLine1: item.title_line_1,
+        titleLine2: item.title_line_2,
+        titleColor: item.title_color,
+        shortFormatTitle: item.short_format_title,
+        longFormatTitle: item.long_format_title,
+        detailsDescription: item.details_description,
+        flavorDescription: item.flavor_description,
+        pinScoreRequirement: item.pin_score_requirement,
+        pinEarnedText: item.pin_earned_text,
+        scheduleInfo: item.schedule_info,
+
+        posterFrontImage: item.poster_front_image,
+        posterBackImage: item.poster_back_image,
+        playlistTileImage: item.playlist_tile_image,
+        loadingScreenImage: item.loading_screen_image,
+
+        posterFaceColor: item.poster_fade_color,
+        primaryColor: item.primary_color,
+        secondaryColor: item.secondary_color,
+        highlightColor: item.highlight_color,
+        shadowColor: item.shadow_color,
+        baseColor: item.base_color,
+        backgroundLeftColor: item.background_left_color,
+        backgroundRightColor: item.background_right_color,
+        backgroundTextColor: item.background_text_color,
+      })),
       lastModified: new Date(this.basicData.tournamentinformation.lastModified),
     };
 
     return result;
   }
   
-  getAllGameModes() {
+  getPlaylist(onlyActive) {
 
     if (
       !this.basicData
@@ -302,8 +408,18 @@ class Client extends Events {
       || !this.basicData.playlistinformation.playlist_info
     ) return false;
 
+    let list = this.basicData.playlistinformation.playlist_info.playlists.map(item => ({
+      name: item.playlist_name,
+      image: item.image,
+      isActive: !!item.special_border,
+    }));
+
+    if (onlyActive) {
+      list = list.filter(item => item.isActive);
+    }
+
     const result = {
-      list: this.basicData.playlistinformation.playlist_info.playlists,
+      list,
       lastModified: new Date(this.basicData.playlistinformation.lastModified),
     };
 
@@ -319,7 +435,15 @@ class Client extends Events {
     ) return false;
 
     const result = {
-      list: this.basicData.battleroyalenews.news.messages,
+      list: this.basicData.battleroyalenews.news.messages.map(item => ({
+        title: item.title,
+        image: item.image,
+        body: item.body,
+        hidden: item.hidden,
+        messageType: item.messagetype,
+        adspace: item.adspace,
+        spotlight: item.spotlight,
+      })),
       style: this.basicData.battleroyalenews.style,
       lastModified: new Date(this.basicData.battleroyalenews.lastModified),
     };
@@ -336,7 +460,15 @@ class Client extends Events {
     ) return false;
 
     const result = {
-      list: this.basicData.savetheworldnews.news.messages,
+      list: this.basicData.savetheworldnews.news.messages.map(item => ({
+        title: item.title,
+        image: item.image,
+        body: item.body,
+        hidden: item.hidden,
+        messageType: item.messagetype,
+        adspace: item.adspace,
+        spotlight: item.spotlight,
+      })),
       lastModified: new Date(this.basicData.savetheworldnews.lastModified),
     };
 
