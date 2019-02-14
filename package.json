@@ -24,8 +24,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"epicgames-client": "^1.4.0",
-		"request": "^2.88.0",
-		"websocket": "^1.0.28"
+		"request": "^2.88.0"
 	},
 	"devDependencies": {
 		"eslint": "^5.13.0",
