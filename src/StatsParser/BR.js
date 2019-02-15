@@ -45,7 +45,11 @@ class BR {
       else result[inputType][playlist][paramName] = paramValue;
     });
     
-    return typeof selectedInputType === 'number' ? result[selectedInputType] : result;
+    if (typeof selectedInputType === 'number') {
+      return typeof result[selectedInputType] !== 'undefined' ? result[selectedInputType] : {};
+    }
+    
+    return result;
   }
 
   rename(name) {
