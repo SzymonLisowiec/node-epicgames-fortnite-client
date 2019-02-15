@@ -9,7 +9,7 @@ __This library supports only fortnite client. If you need launcher, check [`node
 
 # Installation
 ```
-npm i epicgames-fortnite-client --save
+npm i epicgames-fortnite-client@1.2.5 --save
 ```
 
 # Example
