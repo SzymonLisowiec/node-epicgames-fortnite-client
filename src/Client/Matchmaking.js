@@ -1,9 +1,12 @@
+/* eslint-disable */
+
 const Events = require('events');
+const { client: WebsocketClient } = require('websocket');
 const ENDPOINT = require('../../resources/Endpoint');
 
-class Client extends Events {
+class Matchmaking extends Events {
 
-  constructor(client, options) {
+  constructor(app, options) {
     super();
 
     if (typeof options === 'undefined') options = {};
@@ -12,22 +15,54 @@ class Client extends Events {
       ...options,
     };
 
-    this.client = client;
-    this.launcher = this.client.launcher;
-    this.account = this.client.launcher.account;
+    this.app = app;
+    this.client = this.app.launcher;
+    this.account = this.client.account;
 
     this.http = this.client.http;
+    this.communicator = null;
+
+    /**
+     * Currently I don't know, how to authorize websocket connection.
+     */
 
     (async () => {
 
-      // const {
-      //   serviceUrl,
-      //   ticketType,
-      //   payload,
-      //   signature, 
-      // } = await this.getTicket();
+      const {
+        serviceUrl,
+        ticketType,
+        payload,
+        signature, 
+      } = await this.getTicket();
 
-      // XMPP connection
+      const ws = new WebsocketClient();
+
+      ws.on('connectFailed', (error) => {
+        console.dir(error);
+      });
+      
+      ws.on('connect', (connection) => {
+
+        console.log('WebSocket Client Connected');
+          
+        connection.on('error', (error) => {
+          console.dir(error);
+        });
+        connection.on('close', () => {
+          console.log('echo-protocol Connection Closed');
+        });
+        connection.on('message', (message) => {
+          console.dir(message);
+        });
+
+      });
+
+      ws.connect(serviceUrl, 'echo-protocol', null, {
+        Authorization: payload,
+        Signature: signature,
+        signature,
+      });
+      console.dir(ws);
 
     })();
 
@@ -36,18 +71,20 @@ class Client extends Events {
   async getTicket() {
     
     try {
-            
+      
       const { data } = await this.http.sendGet(
         // eslint-disable-next-line max-len
         `${ENDPOINT.MATCHMAKING_TICKET.replace('{{account_id}}', this.account.id)}?partyPlayerIds=${this.account.id}&bucketId=4620426%3A0%3AEU%3Aplaylist_defaultsolo&player.platform=Windows&player.subregions=DE%2CFR%2CGB&player.option.crossplayOptOut=false&party.WIN=true&input.KBM=true`,
-        `${this.client.auth.token_type} ${this.client.auth.access_token}`,
+        `${this.app.auth.tokenType} ${this.app.auth.accessToken}`,
       );
+
+      console.dir(data);
       
       return data;
 
     } catch (err) {
 
-      this.launcher.debug.print(new Error(err));
+      this.client.debug.print(new Error(err));
 
     }
 
@@ -56,4 +93,4 @@ class Client extends Events {
 
 }
 
-module.exports = Client;
+module.exports = Matchmaking;
