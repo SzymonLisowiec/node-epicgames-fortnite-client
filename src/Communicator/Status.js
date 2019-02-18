@@ -48,7 +48,7 @@ class Status extends LauncherStatus {
       notAcceptingReason: party.notAcceptingReason,
 
       source: {
-        accountAd: party.sourceId,
+        accountId: party.sourceId,
         displayName: party.sourceDisplayName,
         platform: party.sourcePlatform,
       },
