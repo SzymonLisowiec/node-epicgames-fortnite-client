@@ -1,9 +1,5 @@
-/* eslint-disable import/no-dynamic-require */
-
-const launcherPackageName = process.env.KYSUNE_EPICGAMES_CLIENT || 'epicgames-client';
-
-const LauncherStatus = require(`${launcherPackageName}/src/Communicator/Status`);
-const Party = require(`${launcherPackageName}/src/Communicator/Party`);
+const LauncherStatus = require('epicgames-client/src/Communicator/Status');
+const Party = require('epicgames-client/src/Communicator/Party');
 
 class Status extends LauncherStatus {
 
