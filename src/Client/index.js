@@ -1,17 +1,15 @@
 const Events = require('events');
+
+const {
+  WaitingRoom, Endpoints: LauncherEndpoint, User, Communicator,
+} = require('epicgames-client');
+
 const ENDPOINT = require('../../resources/Endpoint');
 
 const Http = require('../Http');
 const Item = require('./Item');
 const Inventory = require('./Inventory');
-
-const {
-  WaitingRoom, Endpoints: LauncherEndpoint, User, Communicator,
-// eslint-disable-next-line import/no-dynamic-require
-} = require(process.env.KYSUNE_EPICGAMES_CLIENT || 'epicgames-client');
-const {
-  BR: StatsParserBR,
-} = require('../StatsParser');
+const { BR: StatsParserBR } = require('../StatsParser');
 const CreativeWorld = require('./CreativeWorld');
 
 const FORTNITE_AUTHORIZATION = 'ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ=';
@@ -22,7 +20,7 @@ class Client extends Events {
     super(config);
     
     this.appName = 'Fortnite';
-    this.libraryName = process.env.KYSUNE_EPICGAMES_FORTNITE_CLIENT || 'epicgames-fortnite-client';
+    this.libraryName = 'epicgames-fortnite-client';
 
     this.config = {
             
