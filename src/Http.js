@@ -64,7 +64,9 @@ class Http {
           switch (body.errorCode) {
 
             default:
-              reject(body.errorCode);
+              // eslint-disable-next-line no-console
+              if (process.env.KYSUNE) console.dir(body);
+              reject(new Error(body.errorCode));
               break;
 
           }
@@ -80,7 +82,7 @@ class Http {
 
     }).catch((err) => {
 
-      throw new Error(err);
+      throw err;
 
     });
 
