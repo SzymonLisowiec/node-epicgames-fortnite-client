@@ -1,8 +1,4 @@
-/* eslint-disable import/no-dynamic-require */
-
-const launcherPackageName = process.env.KYSUNE_EPICGAMES_CLIENT || 'epicgames-client';
-
-const { EInputType } = require(`${launcherPackageName}`);
+const { EInputType } = require('epicgames-client');
 
 class BR {
 
