@@ -35,7 +35,7 @@ class Client extends Events {
         
     this.launcher = launcher;
 
-    this.build = '4.22.0-4996168+++Fortnite+Release-7.40'; // "Engine Version:" in FortniteGame.log
+    this.build = '4.22.0-5046157+++Fortnite+Release-7.40'; // "Engine Version:" in FortniteGame.log
     this.buildId = 4774386; // "Net CL:" in FortniteGame.log
         
     this.http = new Http(this.config.http);
