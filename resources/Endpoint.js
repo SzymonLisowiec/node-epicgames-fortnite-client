@@ -5,6 +5,7 @@ module.exports = Object.freeze({
   STATS: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/stats/accountId',
   STATSV2: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/statsv2/account',
   STOREFRONT_CATALOG: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/storefront/v2/catalog', // ?rvn=4
+  MCP_PROFILE: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/profile',
 
   CREATIVE_FAVORITES: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/creative/favorites', //  /{{account_id}}/{{world_code}}?limit=30
 
@@ -19,6 +20,7 @@ module.exports = Object.freeze({
 
   // IDK, friend codes?: https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/friendcodes/9a1d43b1d826420e9fa393a79b74b2ff/epic
   
+  // eslint-disable-next-line max-len
   MATCHMAKING_TICKET: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/matchmakingservice/ticket/player/{{account_id}}', // ?partyPlayerIds=59a2dae26f7e4ba18e05d4db37bf3189&bucketId=4620426%3A0%3AEU%3Aplaylist_defaultsquad&player.platform=Windows&player.subregions=DE%2CFR%2CGB&player.option.fillTeam=true&player.option.crossplayOptOut=false&party.WIN=true&input.KBM=true
   // XMPP wss://fortnite-matchmaking-public-service-live-prod-a.ol.epicgames.com:443
   MATCHMAKING_SESSION: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/matchmaking/session/{{session_id}}',

@@ -1,4 +1,4 @@
-const ENDPOINT = require('../../resources/Endpoint');
+const ENDPOINT = require('../../../resources/Endpoint');
 
 class CreativeWorld {
 

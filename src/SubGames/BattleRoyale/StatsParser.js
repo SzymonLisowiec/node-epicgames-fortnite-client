@@ -2,10 +2,10 @@ const { EInputType } = require('epicgames-client');
 
 class BR {
 
-  constructor(app) {
+  constructor(subGame) {
 
-    this.app = app;
-    this.client = app.launcher;
+    this.app = subGame.fn;
+    this.client = this.app.launcher;
 
   }
 
