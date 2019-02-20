@@ -24,19 +24,19 @@ let eg = new EGClient({
 });
 
 eg.init().then(async (success) => {
- 
+  
   if(!success)
     throw new Error('Cannot initialize EpicGames launcher.');
-
-	if(!await eg.login())
-		throw new Error('Cannot login on EpicGames account.');
-
-	const fortnite = await eg.runGame(Fortnite);
+    
+  if(!await eg.login())
+    throw new Error('Cannot login on EpicGames account.');
+    
+  const fortnite = await eg.runGame(Fortnite);
   const br = await eg.runSubGame(ESubGame.BattleRoyale);
-  
-	let stats = await br.getStatsForPlayer('Kysune');
-	
-	console.dir(stats);
+
+  let stats = await br.getStatsForPlayer('Kysune');
+
+  console.dir(stats);
 
 });
 ```
