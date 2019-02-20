@@ -1,5 +1,4 @@
-# node-epicgames-fortnite-client
-### Unofficial Fortnite client in javascript.
+# Unofficial Fortnite Client for Node.js
 [![npm version](https://img.shields.io/npm/v/epicgames-fortnite-client.svg)](https://npmjs.com/package/epicgames-fortnite-client)
 [![npm downloads](https://img.shields.io/npm/dm/epicgames-fortnite-client.svg)](https://npmjs.com/package/epicgames-fortnite-client)
 [![license](https://img.shields.io/npm/l/epicgames-fortnite-client.svg)](https://github.com/SzymonLisowiec/node-epicgames-fortnite-client/blob/master/LICENSE.MD)
@@ -32,7 +31,7 @@ eg.init().then(async (success) => {
     throw new Error('Cannot login on EpicGames account.');
     
   const fortnite = await eg.runGame(Fortnite);
-  const br = await eg.runSubGame(ESubGame.BattleRoyale);
+  const br = await fortnite.runSubGame(ESubGame.BattleRoyale);
 
   let stats = await br.getStatsForPlayer('Kysune');
 
