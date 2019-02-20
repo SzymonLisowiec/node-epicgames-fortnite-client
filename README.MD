@@ -16,6 +16,7 @@ npm i epicgames-fortnite-client --save
 ```javascript
 const EGClient = require('epicgames-client').Client;
 const Fortnite = require('epicgames-fortnite-client');
+const { ESubGame } = Fortnite;
 
 let eg = new EGClient({
     email: 'EMAIL',
@@ -23,16 +24,17 @@ let eg = new EGClient({
 });
 
 eg.init().then(async (success) => {
-	
-	if(!success)
-		throw new Error('Cannot initialize EpicGames launcher.');
+ 
+  if(!success)
+    throw new Error('Cannot initialize EpicGames launcher.');
 
 	if(!await eg.login())
 		throw new Error('Cannot login on EpicGames account.');
 
-	let fortnite = await eg.runGame(Fortnite);
-
-	let stats = await fortnite.getStatsBR('Kysune');
+	const fortnite = await eg.runGame(Fortnite);
+  const br = await eg.runSubGame(ESubGame.BattleRoyale);
+  
+	let stats = await br.getStatsForPlayer('Kysune');
 	
 	console.dir(stats);
 
