@@ -50,6 +50,7 @@ class BR {
 
   rename(name) {
     switch (name) {
+      case 'placetop5': return 'placeTop5';
       case 'placetop6': return 'placeTop6';
       case 'placetop25': return 'placeTop25';
       case 'placetop1': return 'placeTop1';
