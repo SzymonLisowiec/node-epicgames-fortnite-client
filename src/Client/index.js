@@ -25,17 +25,18 @@ class Client extends Events {
     
     this.appName = 'Fortnite';
     this.libraryName = 'epicgames-fortnite-client';
+        
+    this.launcher = launcher;
 
     this.config = {
             
-      useWaitingRoom: false,
-      http: {},
+      useWaitingRoom: this.launcher.config.useWaitingRoom,
+      useCommunicator: this.launcher.config.useCommunicator,
+      http: this.launcher.config.http,
 
       ...config,
 
     };
-        
-    this.launcher = launcher;
 
     this.version = '4.22.0-5046157+++Fortnite+Release-7.40'; // "Engine Version:" in FortniteGame.log
     this.buildId = 4774386; // "Net CL:" in FortniteGame.log
@@ -64,8 +65,13 @@ class Client extends Events {
             
       let wait = false;
       if (this.config.useWaitingRoom) {
-        const waitingRoom = new WaitingRoom(this.http, ENDPOINT.WAITING_ROOM);
-        wait = await waitingRoom.needWait();
+        try {
+          const waitingRoom = new WaitingRoom(this, ENDPOINT.WAITING_ROOM);
+          wait = await waitingRoom.needWait();
+        } catch (error) {
+          this.debug.print(new Error(`WaitingRoom error: ${error}`));
+          return false;
+        }
       }
     
       if (wait) {
@@ -96,13 +102,20 @@ class Client extends Events {
             }),
           ));
           
-          this.communicator = new Communicator(this);
-          await this.communicator.connect(this.auth.accessToken);
+          if (this.config.useCommunicator) {
+            this.communicator = new Communicator(this);
+            await this.communicator.connect(this.auth.accessToken);
+          }
 
           this.launcher.on('access_token_refreshed', async () => {
+
             await this.login(true);
-            await this.communicator.disconnect();
-            await this.communicator.connect(this.auth.accessToken);
+
+            if (this.communicator) {
+              await this.communicator.disconnect();
+              await this.communicator.connect(this.auth.accessToken);
+            }
+
           });
 
           return login;
