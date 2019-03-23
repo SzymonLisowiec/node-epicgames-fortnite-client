@@ -311,6 +311,10 @@ class Client extends Events {
         case 'Currency:MtxGiveaway':
           sum += currency.quantity;
           break;
+          
+        case 'Currency:MtxPurchased':
+          sum += currency.quantity;
+          break;
         
         default:
           this.launcher.debug.print(`Unknown currency with template '${currency.templateId}'`);
