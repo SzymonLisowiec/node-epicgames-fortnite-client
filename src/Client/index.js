@@ -118,9 +118,11 @@ class Client extends Events {
 
           });
 
-          this.launcher.on('logouted', async () => {
-            await this.communicator.disconnect(false, true);
-          });
+          if (this.communicator) {
+            this.launcher.on('logouted', async () => {
+              await this.communicator.disconnect(false, true);
+            });
+          }
 
           return login;
 
