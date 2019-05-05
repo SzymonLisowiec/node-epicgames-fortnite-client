@@ -38,8 +38,8 @@ class Client extends Events {
 
     };
 
-    this.version = '4.22.0-5046157+++Fortnite+Release-7.40'; // "Engine Version:" in FortniteGame.log
-    this.buildId = 4774386; // "Net CL:" in FortniteGame.log
+    this.version = '4.23.0-6165369+++Fortnite+Release-8.51'; // "Engine Version:" in FortniteGame.log
+    this.buildId = 6037427; // "Net CL:" in FortniteGame.log
         
     this.http = new Http(this.config.http);
     this.http.setHeader('Accept-Language', this.launcher.http.getHeader('Accept-Language'));
