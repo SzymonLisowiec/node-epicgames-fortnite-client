@@ -16,10 +16,10 @@ class Matchmaking extends Events {
     };
 
     this.app = app;
-    this.client = this.app.launcher;
-    this.account = this.client.account;
+    this.launcher = this.app.launcher;
+    this.account = this.launcher.account;
 
-    this.http = this.client.http;
+    this.http = this.launcher.http;
     this.communicator = null;
 
     /**
@@ -84,7 +84,7 @@ class Matchmaking extends Events {
 
     } catch (err) {
 
-      this.client.debug.print(new Error(err));
+      this.launcher.debug.print(new Error(err));
 
     }
 

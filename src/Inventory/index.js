@@ -19,6 +19,7 @@ const Items = {
   ChallengeBundleSchedule: require('./Items/ChallengeBundleSchedule'),
   ConditionalAction: require('./Items/ConditionalAction'),
   AthenaMusicPack: require('./Items/AthenaMusicPack'),
+  GiftBox: require('./Items/GiftBox'),
 };
 
 class Inventory {
@@ -26,7 +27,7 @@ class Inventory {
   constructor(app, items) {
 
     this.app = app;
-    this.client = this.app.launcher;
+    this.launcher = this.app.launcher;
 
     this.items = items || [];
 
@@ -39,8 +40,9 @@ class Inventory {
     
     if (typeof Item === 'undefined') {
       // eslint-disable-next-line no-console
-      if (process.env.KYSUNE) console.log(JSON.stringify(itemData, null, 2));
-      this.client.debug.print(`Unknown item: ${itemClass}`);
+      console.dir(itemData);
+      // console.log(JSON.stringify(itemData, null, 2));
+      this.launcher.debug.print(`Unknown item: ${itemClass}`);
       return;
     }
 

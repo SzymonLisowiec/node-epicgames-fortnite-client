@@ -1,5 +1,4 @@
 const LauncherStatus = require('epicgames-client/src/Communicator/Status');
-const Party = require('epicgames-client/src/Communicator/Party');
 
 class Status extends LauncherStatus {
 
@@ -51,17 +50,6 @@ class Status extends LauncherStatus {
 
     };
 
-  }
-
-  async joinToParty() {
-    
-    if (!this.partyJoinData) return false;
-
-    const party = new Party(this.communicator, this.partyJoinData);
-
-    await this.party.askToJoin(this.sender.jid);
-
-    return party;
   }
 
 }

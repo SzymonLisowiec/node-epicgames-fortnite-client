@@ -1,7 +1,7 @@
 const Events = require('events');
 
 const {
-  WaitingRoom, Endpoints: LauncherEndpoint, Communicator,
+  WaitingRoom, Endpoints: LauncherEndpoint, Communicator, Party,
 } = require('epicgames-client');
 
 const ENDPOINT = require('../../resources/Endpoint');
@@ -23,7 +23,7 @@ class Client extends Events {
   constructor(launcher, config) {
     super(config);
     
-    this.appName = 'Fortnite';
+    this.id = 'Fortnite';
     this.libraryName = 'epicgames-fortnite-client';
         
     this.launcher = launcher;
@@ -38,8 +38,8 @@ class Client extends Events {
 
     };
 
-    this.version = '4.23.0-6165369+++Fortnite+Release-8.51'; // "Engine Version:" in FortniteGame.log
-    this.buildId = 6037427; // "Net CL:" in FortniteGame.log
+    this.version = '4.23.0-6573057+++Fortnite+Release-9.10'; // "Engine Version:" in FortniteGame.log
+    this.buildId = 6245326; // "Net CL:" in FortniteGame.log
         
     this.http = new Http(this.config.http);
     this.http.setHeader('Accept-Language', this.launcher.http.getHeader('Accept-Language'));
@@ -52,6 +52,8 @@ class Client extends Events {
 
     this.communicator = null;
     this.profiles = {};
+
+    this.party = null;
 
   }
 
@@ -123,6 +125,9 @@ class Client extends Events {
               await this.communicator.disconnect(false, true);
             });
           }
+
+          this.party = await Party.create(this);
+          this.party.invite('9a1d43b1d826420e9fa393a79b74b2ff');
 
           return login;
 
