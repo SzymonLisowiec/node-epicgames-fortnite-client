@@ -2,7 +2,7 @@ const Events = require('events');
 
 const {
   WaitingRoom, Endpoints: LauncherEndpoint, Communicator, Party,
-} = require('../../../node-epicgames-client'); // TODO
+} = require('epicgames-client');
 
 const ENDPOINT = require('../../resources/Endpoint');
 
