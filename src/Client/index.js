@@ -2,7 +2,7 @@ const Events = require('events');
 
 const {
   WaitingRoom, Endpoints: LauncherEndpoint, Communicator, Party,
-} = require('epicgames-client');
+} = require('../../../node-epicgames-client'); // TODO
 
 const ENDPOINT = require('../../resources/Endpoint');
 
@@ -24,12 +24,12 @@ class Client extends Events {
     super(config);
     
     this.id = 'Fortnite';
-    this.libraryName = 'epicgames-fortnite-client';
-        
+    
     this.launcher = launcher;
 
     this.config = {
-            
+      
+      partyMemberConfirmation: this.launcher.config.partyMemberConfirmation,
       useWaitingRoom: this.launcher.config.useWaitingRoom,
       useCommunicator: this.launcher.config.useCommunicator,
       http: this.launcher.config.http,
