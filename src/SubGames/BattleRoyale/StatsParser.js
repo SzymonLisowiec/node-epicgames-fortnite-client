@@ -5,7 +5,7 @@ class BR {
   constructor(subGame) {
 
     this.app = subGame.fn;
-    this.client = this.app.launcher;
+    this.launcher = this.app.launcher;
 
   }
 

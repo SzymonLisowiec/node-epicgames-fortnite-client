@@ -3,7 +3,7 @@ class Item {
   constructor(app, data) {
 
     this.app = app;
-    this.client = this.app.launcher;
+    this.launcher = this.app.launcher;
 
     this.id = data.id;
     this.templateId = data.templateId;

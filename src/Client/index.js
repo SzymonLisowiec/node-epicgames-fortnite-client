@@ -1,7 +1,5 @@
-const Events = require('events');
-
 const {
-  WaitingRoom, Endpoints: LauncherEndpoint, Communicator,
+  WaitingRoom, Endpoints: LauncherEndpoint, Application,
 } = require('epicgames-client');
 
 const ENDPOINT = require('../../resources/Endpoint');
@@ -16,30 +14,34 @@ const CreativeSubGame = require('../SubGames/Creative');
 
 const ESubGame = require('../../enums/SubGame');
 
+const Party = require('../Party');
+const PartyMeta = require('../Party/PartyMeta');
+const PartyMember = require('../Party/Member');
+const PartyMemberMeta = require('../Party/MemberMeta');
+
 const FORTNITE_AUTHORIZATION = 'ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ=';
 
-class Client extends Events {
+class App extends Application {
+
+  static get Party() { return Party; }
+
+  static get PartyMeta() { return PartyMeta; }
+
+  static get PartyMember() { return PartyMember; }
+
+  static get PartyMemberMeta() { return PartyMemberMeta; }
 
   constructor(launcher, config) {
-    super(config);
+    super(launcher, config);
     
-    this.appName = 'Fortnite';
-    this.libraryName = 'epicgames-fortnite-client';
-        
-    this.launcher = launcher;
+    this.id = 'Fortnite';
 
     this.config = {
-            
-      useWaitingRoom: this.launcher.config.useWaitingRoom,
-      useCommunicator: this.launcher.config.useCommunicator,
-      http: this.launcher.config.http,
-
-      ...config,
-
+      ...this.config,
+      build: '++Fortnite+Release-9.10-CL-6616201', // named "Build" in official client logs
+      engineBuild: '4.23.0-6616201+++Fortnite+Release-9.10', // named "Engine Build" in official client logs
+      netCL: 6245326, // named "Net CL" in official client logs
     };
-
-    this.version = '4.23.0-6165369+++Fortnite+Release-8.51'; // "Engine Version:" in FortniteGame.log
-    this.buildId = 6037427; // "Net CL:" in FortniteGame.log
         
     this.http = new Http(this.config.http);
     this.http.setHeader('Accept-Language', this.launcher.http.getHeader('Accept-Language'));
@@ -52,6 +54,13 @@ class Client extends Events {
 
     this.communicator = null;
     this.profiles = {};
+
+    this.party = null;
+
+    this.Party = App.Party;
+    this.PartyMeta = App.PartyMeta;
+    this.PartyMember = App.PartyMember;
+    this.PartyMemberMeta = App.PartyMemberMeta;
 
   }
 
@@ -103,7 +112,7 @@ class Client extends Events {
           ));
           
           if (this.config.useCommunicator) {
-            this.communicator = new Communicator(this);
+            this.communicator = new this.Communicator(this);
             await this.communicator.connect(this.auth.accessToken);
           }
 
@@ -123,6 +132,8 @@ class Client extends Events {
               await this.communicator.disconnect(false, true);
             });
           }
+
+          this.party = await this.Party.create(this);
 
           return login;
 
@@ -393,4 +404,4 @@ class Client extends Events {
 
 }
 
-module.exports = Client;
+module.exports = App;
