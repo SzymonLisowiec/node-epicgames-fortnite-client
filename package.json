@@ -1,6 +1,6 @@
 {
 	"name": "epicgames-fortnite-client",
-	"version": "2.0.3",
+	"version": "2.0.5",
 	"description": "Unofficial Fortnite client in javascript.",
 	"main": "index.js",
 	"keywords": [
@@ -23,13 +23,14 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"epicgames-client": "next",
+		"epicgames-client": "^2.0.5",
 		"request": "^2.88.0",
 		"websocket": "^1.0.28"
 	},
 	"devDependencies": {
 		"eslint": "^5.13.0",
 		"eslint-config-airbnb-base": "^13.1.0",
-		"eslint-plugin-import": "^2.16.0"
+		"eslint-plugin-import": "^2.16.0",
+		"epicgames-client": "file:./../node-epicgames-client"
 	}
 }

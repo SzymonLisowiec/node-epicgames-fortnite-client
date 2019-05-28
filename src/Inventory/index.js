@@ -40,8 +40,7 @@ class Inventory {
     
     if (typeof Item === 'undefined') {
       // eslint-disable-next-line no-console
-      console.dir(itemData);
-      // console.log(JSON.stringify(itemData, null, 2));
+      // console.dir(itemData);
       this.launcher.debug.print(`Unknown item: ${itemClass}`);
       return;
     }
