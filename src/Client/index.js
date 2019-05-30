@@ -62,6 +62,12 @@ class App extends Application {
     this.PartyMember = App.PartyMember;
     this.PartyMemberMeta = App.PartyMemberMeta;
 
+    this.launcher.on('exit', this.onExit.bind(this));
+
+  }
+
+  async onExit() {
+    if (this.party) await this.party.leave();
   }
 
   setLanguage(language) {
@@ -96,7 +102,7 @@ class App extends Application {
         const { data } = await this.http.sendGet(ENDPOINT.BASIC_DATA);
                 
         if (data) {
-                    
+          
           this.basicData = data;
 
           const login = await this.login();
