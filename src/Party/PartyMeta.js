@@ -68,7 +68,7 @@ class PartyMeta extends LauncherPartyMeta {
         });
       }
     });
-    this.set('RawSquadAssignments_j', {
+    return this.set('RawSquadAssignments_j', {
       RawSquadAssignments: assignments,
     });
   }
