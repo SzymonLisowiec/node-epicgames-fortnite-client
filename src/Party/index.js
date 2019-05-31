@@ -13,7 +13,9 @@ class Party extends LauncherParty {
 
     this.app.communicator.on(`party#${this.id}:member:joined`, () => {
       if (this.me.id !== this.leader.id) return;
-      this.patch(this.meta.refreshSquadAssignments());
+      this.patch({
+        RawSquadAssignments_j: this.meta.refreshSquadAssignments(),
+      });
     });
 
   }
