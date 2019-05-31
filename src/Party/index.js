@@ -27,6 +27,10 @@ class Party extends LauncherParty {
     await this.meta.setAllowJoinInProgress(...args);
   }
 
+  async setPlaylist(...args) {
+    await this.meta.setPlaylist(...args);
+  }
+
 }
 
 module.exports = Party;
