@@ -1,6 +1,6 @@
 {
 	"name": "epicgames-fortnite-client",
-	"version": "2.0.6",
+	"version": "2.0.7",
 	"description": "Unofficial Fortnite client in javascript.",
 	"main": "index.js",
 	"keywords": [
