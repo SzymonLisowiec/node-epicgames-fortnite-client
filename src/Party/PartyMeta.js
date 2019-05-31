@@ -75,13 +75,13 @@ class PartyMeta extends LauncherPartyMeta {
 
   async setCustomMatchKey(key) {
     await this.party.patch({
-      CustomMatchKey_s: key || '',
+      CustomMatchKey_s: this.set('CustomMatchKey_s', key || ''),
     });
   }
 
   async setAllowJoinInProgress(canJoin) {
     await this.party.patch({
-      AllowJoinInProgress_b: !!canJoin,
+      AllowJoinInProgress_b: this.set('AllowJoinInProgress_b', !!canJoin),
     });
   }
   
