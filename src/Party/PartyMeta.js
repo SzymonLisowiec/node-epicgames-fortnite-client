@@ -84,6 +84,21 @@ class PartyMeta extends LauncherPartyMeta {
       AllowJoinInProgress_b: this.set('AllowJoinInProgress_b', !!canJoin),
     });
   }
+
+  async setPlaylist(regionId, playlistName, tournamentId, eventWindowId) {
+    if (!regionId) throw new Error('Wrong region id!');
+    if (!playlistName) throw new Error('Wrong playlist name!');
+    await this.party.patch({
+      PlaylistData_j: this.set('PlaylistData_j', {
+        PlaylistData: {
+          playlistName,
+          tournamentId: tournamentId || '',
+          eventWindowId: eventWindowId || '',
+          regionId,
+        },
+      }),
+    });
+  }
   
 }
 
