@@ -8,11 +8,11 @@ class PartyMeta extends LauncherPartyMeta {
     this.schema = {
       PrimaryGameSessionId_s: '',
       PartyState_s: 'BattleRoyaleView',
-      LobbyConnectionStarted_b: false,
+      LobbyConnectionStarted_b: 'false',
       MatchmakingResult_s: 'NoResults',
       MatchmakingState_s: 'NotMatchmaking',
-      SessionIsCriticalMission_b: false,
-      ZoneTileIndex_U: -1,
+      SessionIsCriticalMission_b: 'false',
+      ZoneTileIndex_U: '-1',
       ZoneInstanceId_s: '',
       TheaterId_s: '',
       TileStates_j: JSON.stringify({
@@ -28,17 +28,17 @@ class PartyMeta extends LauncherPartyMeta {
           regionId: 'EU',
         },
       }),
-      AthenaSquadFill_b: true,
-      AllowJoinInProgress_b: false,
+      AthenaSquadFill_b: 'true',
+      AllowJoinInProgress_b: 'false',
       LFGTime_s: '0001-01-01T00:00:00.000Z',
-      PartyIsJoinedInProgress_b: false,
+      PartyIsJoinedInProgress_b: 'false',
       GameSessionKey_s: '',
       RawSquadAssignments_j: '',
       PrivacySettings_j: JSON.stringify({
         PrivacySettings: {
-          partyType: 'Public',
-          partyInviteRestriction: 'LeaderOnly',
-          bOnlyLeaderFriendsCanJoin: true,
+          partyType: this.party.config.privacy.partyType,
+          partyInviteRestriction: this.party.config.privacy.inviteRestriction,
+          bOnlyLeaderFriendsCanJoin: this.party.config.privacy.onlyLeaderFriendsCanJoin,
         },
       }),
       PlatformSessions_j: JSON.stringify({
@@ -68,7 +68,7 @@ class PartyMeta extends LauncherPartyMeta {
         });
       }
     });
-    this.set('RawSquadAssignments_j', {
+    return this.set('RawSquadAssignments_j', {
       RawSquadAssignments: assignments,
     });
   }
