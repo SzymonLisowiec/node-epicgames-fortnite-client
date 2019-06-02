@@ -37,10 +37,10 @@ class App extends Application {
     this.id = 'Fortnite';
 
     this.config = {
-      ...this.config,
       build: '++Fortnite+Release-9.10-CL-6616201', // named "Build" in official client logs
       engineBuild: '4.23.0-6616201+++Fortnite+Release-9.10', // named "Engine Build" in official client logs
       netCL: 6245326, // named "Net CL" in official client logs
+      ...this.config,
     };
         
     this.http = new Http(this.config.http);
@@ -139,7 +139,11 @@ class App extends Application {
             });
           }
 
-          this.party = await this.Party.create(this);
+          this.party = null;
+
+          if (this.config.createPartyOnStart) {
+            this.party = await this.Party.create(this);
+          }
 
           return login;
 
