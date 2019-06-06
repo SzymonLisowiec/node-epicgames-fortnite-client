@@ -74,22 +74,22 @@ class Member extends LauncherMember {
 
   async setOutfit(asset, key) {
     await this.meta.setCosmeticLoadout({
-      characterDefinition: asset,
-      characterDefinitionEncryptionKey: key || '',
+      characterDef: asset,
+      characterEKey: key || '',
     });
   }
 
   async setBackpack(asset, key) {
     await this.meta.setCosmeticLoadout({
-      backpackDefinition: asset,
-      backpackDefinitionEncryptionKey: key || '',
+      backpackDef: asset,
+      backpackEKey: key || '',
     });
   }
 
   async setPickaxe(asset, key) {
     await this.meta.setCosmeticLoadout({
-      pickaxeDefinition: asset,
-      pickaxeDefinitionEncryptionKey: key || '',
+      pickaxeDef: asset,
+      pickaxeEKey: key || '',
     });
   }
 
