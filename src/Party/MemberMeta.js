@@ -60,13 +60,13 @@ class MemberMeta extends LauncherMemberMeta {
       }),
       AthenaCosmeticLoadout_j: JSON.stringify({
         AthenaCosmeticLoadout: {
-          characterDefinition: `AthenaCharacterItemDefinition'/Game/Athena/Items/Cosmetics/Characters/${character}.${character}'`,
-          characterDefinitionEncryptionKey: '',
-          backpackDefinition: 'None',
-          backpackDefinitionEncryptionKey: '',
-          pickaxeDefinition: 'AthenaPickaxeItemDefinition\'/Game/Athena/Items/Cosmetics/Pickaxes/DefaultPickaxe.DefaultPickaxe\'',
-          pickaxeDefinitionEncryptionKey: '',
-          cosmeticVariants: [],
+          characterDef: `AthenaCharacterItemDefinition'/Game/Athena/Items/Cosmetics/Characters/${character}.${character}'`,
+          characterEKey: '',
+          backpackDef: 'None',
+          backpackEKey: '',
+          pickaxeDef: 'AthenaPickaxeItemDefinition\'/Game/Athena/Items/Cosmetics/Pickaxes/DefaultPickaxe.DefaultPickaxe\'',
+          pickaxeEKey: '',
+          variants: [],
         },
       }),
       AthenaBannerInfo_j: JSON.stringify({
@@ -92,6 +92,8 @@ class MemberMeta extends LauncherMemberMeta {
       PlatformUniqueId_s: 'INVALID',
       PlatformSessionId_s: '',
       CrossplayPreference_s: 'OptedIn',
+      VoiceChatEnabled_b: 'true',
+      VoiceConnectionId_s: '',
     };
 
     if (meta) this.update(meta, true);

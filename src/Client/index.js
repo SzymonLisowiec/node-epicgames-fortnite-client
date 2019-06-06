@@ -39,7 +39,8 @@ class App extends Application {
     this.config = {
       build: '++Fortnite+Release-9.10-CL-6616201', // named "Build" in official client logs
       engineBuild: '4.23.0-6616201+++Fortnite+Release-9.10', // named "Engine Build" in official client logs
-      netCL: 6245326, // named "Net CL" in official client logs
+      netCL: 6477402, // named "Net CL" in official client logs
+      partyBuildId: '1:1:6477402',
       ...this.config,
     };
         
@@ -130,7 +131,6 @@ class App extends Application {
               await this.communicator.disconnect();
               await this.communicator.connect(this.auth.accessToken);
             }
-
           });
 
           if (this.communicator) {
@@ -142,7 +142,25 @@ class App extends Application {
           this.party = null;
 
           if (this.config.createPartyOnStart) {
+            const partyStatus = await this.Party.lookupUser(this, this.launcher.account.id);
+            // if (partyStatus.current.length > 0) {
+            //   this.party = new this.Party(this, partyStatus.current[0]);
+            //   await this.party.patch();
+            //   this.party.updatePresence();
+            //   this.launcher.debug.print(`Fortnite: You has joined to previous party#${this.party.id}.`);
+            // } else {
+            //   this.party = await this.Party.create(this);
+            //   this.launcher.debug.print(`Fortnite: Party#${this.party.id} has been created.`);
+            // }
+
+            if (partyStatus.current.length > 0) {
+              this.party = new this.Party(this, partyStatus.current[0]);
+              await this.party.leave();
+              this.launcher.debug.print(`Fortnite: You left previous party#${partyStatus.current[0].id}.`);
+            }
             this.party = await this.Party.create(this);
+            this.launcher.debug.print(`Fortnite: Party#${this.party.id} has been created.`);
+
           }
 
           return login;
