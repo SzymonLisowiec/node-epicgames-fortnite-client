@@ -37,10 +37,10 @@ class App extends Application {
     this.id = 'Fortnite';
 
     this.config = {
-      build: '++Fortnite+Release-9.10-CL-6616201', // named "Build" in official client logs
-      engineBuild: '4.23.0-6616201+++Fortnite+Release-9.10', // named "Engine Build" in official client logs
-      netCL: 6477402, // named "Net CL" in official client logs
-      partyBuildId: '1:1:6477402',
+      build: '++Fortnite+Release-9.21-CL-6922310', // named "Build" in official client logs
+      engineBuild: '4.23.0-6922310+++Fortnite+Release-9.21', // named "Engine Version" in official client logs
+      netCL: 6819019, // named "Net CL" in official client logs
+      partyBuildId: '1:1:6819019',
       ...this.config,
     };
         
@@ -141,7 +141,7 @@ class App extends Application {
 
           this.party = null;
 
-          if (this.config.createPartyOnStart) {
+          if (this.communicator && this.config.createPartyOnStart) { // TODO - move it to subGame
             const partyStatus = await this.Party.lookupUser(this, this.launcher.account.id);
             // if (partyStatus.current.length > 0) {
             //   this.party = new this.Party(this, partyStatus.current[0]);
