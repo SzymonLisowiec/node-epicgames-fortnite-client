@@ -18,15 +18,14 @@ class CreativeSubGame extends SubGame {
     await this.fn.updateProfile('athena');
 
   }
-
-  // DEPRECATED
-  // /**
-  //  * Returns informations about creative world.
-  //  * @param {string} code in format `XXXX-XXXX-XXXX`
-  //  */
-  // getWorldByCode(code) {
-  //   return CreativeWorld.getByCode(this.fn, code);
-  // }
+  
+  /**
+   * Returns informations about creative world.
+   * @param {string} code in format `XXXX-XXXX-XXXX`
+   */
+  getWorldByCode(code) {
+    return CreativeWorld.getByCode(this.fn, code);
+  }
 
   /**
    * Returns list of your favorite creative worlds.

@@ -19,6 +19,9 @@ module.exports = Object.freeze({
    */
 
   // IDK, friend codes?: https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/friendcodes/9a1d43b1d826420e9fa393a79b74b2ff/epic
+
+  LINKS: 'https://links-public-service-live.ol.epicgames.com/links/api/{{namespace}}/mnemonic/{{mnemonic}}',
+  LINKS_AUTHOR: 'https://links-public-service-live.ol.epicgames.com/links/api/{{namespace}}/author/{{accountId}}',
   
   // eslint-disable-next-line max-len
   MATCHMAKING_TICKET: 'https://fortnite-public-service-prod11.ol.epicgames.com/fortnite/api/game/v2/matchmakingservice/ticket/player/{{account_id}}', // ?partyPlayerIds=59a2dae26f7e4ba18e05d4db37bf3189&bucketId=4620426%3A0%3AEU%3Aplaylist_defaultsquad&player.platform=Windows&player.subregions=DE%2CFR%2CGB&player.option.fillTeam=true&player.option.crossplayOptOut=false&party.WIN=true&input.KBM=true

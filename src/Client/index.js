@@ -341,6 +341,27 @@ class App extends Application {
 
   }
 
+  async getLink(mnemonic) {
+
+    try {
+
+      const { data } = await this.http.sendGet(
+        ENDPOINT.LINKS.replace('{{namespace}}', 'fn').replace('{{mnemonic}}', mnemonic),
+        `${this.auth.tokenType} ${this.auth.accessToken}`,
+      );
+      
+      return data;
+
+    } catch (err) {
+
+      this.launcher.debug.print('Cannot get link.');
+      this.launcher.debug.print(new Error(err));
+
+    }
+
+    return {};
+  }
+
   get vbucks() {
     
     let sum = 0;
