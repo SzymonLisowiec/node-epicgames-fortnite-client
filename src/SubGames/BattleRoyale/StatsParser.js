@@ -1,6 +1,6 @@
 const { EInputType } = require('epicgames-client');
 
-class BR {
+class StatsParser {
 
   constructor(subGame) {
 
@@ -9,7 +9,56 @@ class BR {
 
   }
 
-  parse(data, selectedInputType) {
+  parseV1(stats, selectedInputType) {
+    
+    if (!stats) return false;
+    
+    const result = {};
+
+    stats.forEach((stat) => {
+
+      const parts = stat.name.match(/^(.*?)_(.*?)_(.*?)_(.*?)_(.*?)$/);
+
+      if (parts.length === 6) {
+        
+        const name = parts[2];
+        const platform = this.readInputType(parts[3]);
+        // const m = parts[4]; // I don't know, what is this. It seems, that everytime is `m0`
+        let mode = parts[5];
+
+        switch (mode) {
+          case 'p2': mode = 'defaultsolo'; break;
+          case 'p10': mode = 'defaultduo'; break;
+          case 'p9': mode = 'defaultsquad'; break;
+          default:
+        }
+
+        if (typeof result[platform] === 'undefined') {
+          result[platform] = {};
+        }
+
+        if (typeof result[platform][mode] === 'undefined') {
+          result[platform][mode] = {};
+        }
+
+        if (name === 'lastmodified') {
+          stat.value = new Date(stat.value * 1000);
+        }
+
+        result[platform][mode][this.rename(name)] = stat.value;
+
+      }
+
+    });
+
+    if (typeof selectedInputType === 'number') {
+      return typeof result[selectedInputType] !== 'undefined' ? result[selectedInputType] : {};
+    }
+
+    return result;
+  }
+
+  parseV2(data, selectedInputType) {
 
     if (!data) return false;
 
@@ -70,10 +119,15 @@ class BR {
       case 'keyboardmouse': return EInputType.MouseAndKeyboard;
       case 'gamepad': return EInputType.Controller;
       case 'touch': return EInputType.Touch;
+      case 'pc': return EInputType.MouseAndKeyboard;
+      case 'ps4': return EInputType.Controller;
+      case 'xb': return EInputType.Controller;
+      case 'and': return EInputType.Touch;
+      case 'ios': return EInputType.Touch;
       default: return inputType;
     }
   }
 
 }
 
-module.exports = BR;
+module.exports = StatsParser;
