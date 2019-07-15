@@ -10,8 +10,6 @@ class SaveTheWorldSubGame extends SubGame {
 
     this.world = null;
 
-    this.launcher.debug.print('More methods for Save The World will be added in future updates.');
-
   }
 
   async init() {
@@ -61,6 +59,17 @@ class SaveTheWorldSubGame extends SubGame {
     };
 
     return result;
+  }
+
+  async receiveDaily() {
+
+    const { data } = await this.fn.requestMCP('ClaimLoginReward', 'campaign', {});
+    if (data && Array.isArray(data.notifications)) {
+      const notification = data.notifications.find(n => n.type === 'daily_rewards');
+      return notification;
+    }
+
+    return null;
   }
 
 }
