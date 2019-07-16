@@ -37,10 +37,10 @@ class App extends Application {
     this.id = 'Fortnite';
 
     this.config = {
-      build: '++Fortnite+Release-9.21-CL-6922310', // named "Build" in official client logs
-      engineBuild: '4.23.0-6922310+++Fortnite+Release-9.21', // named "Engine Version" in official client logs
-      netCL: 6819019, // named "Net CL" in official client logs
-      partyBuildId: '1:1:6819019',
+      build: '++Fortnite+Release-9.30-CL-7095426', // named "Build" in official client logs
+      engineBuild: '4.23.0-7095426+++Fortnite+Release-9.30', // named "Engine Version" in official client logs
+      netCL: 6663274, // named "Net CL" in official client logs
+      partyBuildId: '1:1:6663274',
       ...this.config,
     };
         
@@ -339,6 +339,27 @@ class App extends Application {
 
     }
 
+  }
+
+  async getLink(mnemonic) {
+
+    try {
+
+      const { data } = await this.http.sendGet(
+        ENDPOINT.LINKS.replace('{{namespace}}', 'fn').replace('{{mnemonic}}', mnemonic),
+        `${this.auth.tokenType} ${this.auth.accessToken}`,
+      );
+      
+      return data;
+
+    } catch (err) {
+
+      this.launcher.debug.print('Cannot get link.');
+      this.launcher.debug.print(new Error(err));
+
+    }
+
+    return {};
   }
 
   get vbucks() {

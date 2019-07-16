@@ -1,6 +1,6 @@
 {
 	"name": "epicgames-fortnite-client",
-	"version": "2.0.14",
+	"version": "2.0.15",
 	"description": "Unofficial Fortnite client in javascript.",
 	"main": "index.js",
 	"keywords": [
@@ -23,7 +23,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"epicgames-client": "^2.0.13",
+		"epicgames-client": "^2.0.17",
 		"request": "^2.88.0",
 		"websocket": "^1.0.28"
 	},

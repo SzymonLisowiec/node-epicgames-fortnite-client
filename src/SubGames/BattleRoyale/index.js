@@ -50,7 +50,42 @@ class BattleRoyaleSubGame extends SubGame {
         `${this.fn.auth.tokenType} ${this.fn.auth.accessToken}`,
       );
       
-      return (new StatsParser(this)).parse(data, inputType);
+      return (new StatsParser(this)).parseV2(data, inputType);
+
+    } catch (err) {
+      
+      this.launcher.debug.print(err);
+
+    }
+
+    return false;
+  }
+
+  /**
+   * Returns an object of statistics for specyfic player.
+   * @param {string} id id or displayName
+   * @param {EInputType} inputType 
+   */
+  async getStatsV1ForPlayer(id, inputType, time) {
+    
+    time = ['weekly', 'alltime'].indexOf(time) > -1 ? time : 'alltime';
+
+    try {
+      
+      if (this.launcher.isDisplayName(id)) {
+
+        const account = await this.launcher.lookup(id);
+        if (account) ({ id } = account);
+        else return false;
+
+      }
+
+      const { data } = await this.fn.http.sendGet(
+        `${ENDPOINT.STATS}/${id}/bulk/window/${time}`,
+        `${this.fn.auth.tokenType} ${this.fn.auth.accessToken}`,
+      );
+
+      return (new StatsParser(this)).parseV1(data, inputType);
 
     } catch (err) {
       

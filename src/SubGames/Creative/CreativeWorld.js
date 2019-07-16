@@ -11,6 +11,9 @@ class CreativeWorld {
     this.description = data.description || null;
     this.type = data.type || null;
     this.locale = data.locale || null;
+    this.introduction = data.introduction || null;
+    this.youtubeVideoId = data.youtubeVideoId || null;
+    this.creatorAccountId = data.creatorAccountId || null;
     this.creatorTag = data.creatorTag || null;
 
   }
@@ -38,46 +41,35 @@ class CreativeWorld {
     return false;
   }
 
-  // DEPRECATED
-  // static async getByCode(fn, code) {
+  static async getByCode(fn, code) {
 
-  //   try {
+    const link = await fn.getLink(code);
 
-  //     const { response: { body } } = await fn.http.sendGet(`https://www.epicgames.com/fn/${code}`, null, null, false);
-  //     let state = null;
+    if (!link) return false;
 
-  //     try {
-        
-  //       state = JSON.parse((/<script>\s{0,}window\.__epic_client_state\s{0,}=\s{0,}(.*)\s{0,};\s{0,}\n{0,}\s{0,}window\./g).exec(body)[1]);
+    try {
 
-  //     } catch (err) {
-        
-  //       fn.launcher.debug.print(new Error(`Cannot get react state of https://www.epicgames.com/fn/${code}`));
+      return new this(fn, {
+        code: link.mnemonic,
+        creatorTag: link.creatorName,
+        creatorAccountId: link.accountId,
+        title: link.metadata.title,
+        description: link.metadata.tagline,
+        type: link.metadata.islandType,
+        locale: link.metadata.locale,
+        introduction: link.metadata.introduction,
+        youtubeVideoId: link.metadata.youtube_video_id,
+      });
 
-  //     }
-      
-  //     if (state && state.CreativeModeStore.code.success) {
-        
-  //       return new this(fn, {
-  //         code,
-  //         creatorTag: state.CreativeModeStore.code.displayName,
-  //         title: state.CreativeModeStore.code.data.title,
-  //         description: state.CreativeModeStore.code.data.tagline,
-  //         type: state.CreativeModeStore.code.data.islandType,
-  //         locale: state.CreativeModeStore.code.data.locale,
-  //       });
+    } catch (err) {
 
-  //     }
+      fn.launcher.debug.print(err);
+      fn.launcher.debug.print(new Error(`Cannot get creative world with code: ${code}`));
 
-  //   } catch (err) {
+    }
 
-  //     fn.launcher.debug.print(err);
-  //     fn.launcher.debug.print(new Error(`Cannot get creative world with code: ${code}`));
-
-  //   }
-
-  //   return false;
-  // }
+    return false;
+  }
   
 }
 
