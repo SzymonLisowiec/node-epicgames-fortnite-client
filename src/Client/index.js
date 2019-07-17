@@ -37,10 +37,10 @@ class App extends Application {
     this.id = 'Fortnite';
 
     this.config = {
-      build: '++Fortnite+Release-9.30-CL-7095426', // named "Build" in official client logs
-      engineBuild: '4.23.0-7095426+++Fortnite+Release-9.30', // named "Engine Version" in official client logs
-      netCL: 6663274, // named "Net CL" in official client logs
-      partyBuildId: '1:1:6663274',
+      build: '++Fortnite+Release-9.40-CL-7315705', // named "Build" in official client logs
+      engineBuild: '4.23.0-7315705+++Fortnite+Release-9.40', // named "Engine Version" in official client logs
+      netCL: 6926949, // named "Net CL" in official client logs
+      partyBuildId: '1:1:6926949',
       ...this.config,
     };
         
