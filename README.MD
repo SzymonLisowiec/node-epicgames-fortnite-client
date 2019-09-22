@@ -51,6 +51,28 @@ eg.init().then(async (success) => {
 # Do you need help?
 Check our discord server: https://discord.gg/HxGfuEx
 
+# Warning about maintenance
+Every Fortnite update, netCL version is updating. You should pass new version number while running this library
+```javascript
+const fortnite = await eg.runGame(Fortnite, {
+  build: '++Fortnite+Release-10.31-CL-8723043',
+  engineBuild: '4.23.0-8723043+++Fortnite+Release-10.31',
+  netCL: 8371706,
+  partyBuildId: '1:1:8371706',
+});
+```
+You'll find informations about version in Fortnite log files under path:
+```
+// Windows
+C:\Users\USERNAME\AppData\Local\FortniteGame\Saved\Logs
+```
+You need to find these lines:
+```
+LogInit: Engine Version: 4.23.0-8723043+++Fortnite+Release-10.31
+LogInit: Compatible Engine Version: 4.23.0-8707299+++Fortnite+Release-10.31
+LogInit: Net CL: 8371706
+```
+
 # License
 MIT License
 
