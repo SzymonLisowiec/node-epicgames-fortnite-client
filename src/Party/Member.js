@@ -24,7 +24,7 @@ class Member extends LauncherMember {
   async setEmote(asset) {
     this.checkPermissions();
     await this.meta.setEmote({
-      emoteItemDef: asset,
+      emoteItemDef: `/Game/Athena/Items/Cosmetics/Dances/${asset}.${asset}`,
     });
   }
 
@@ -55,7 +55,12 @@ class Member extends LauncherMember {
   }
 
   /**
-   * TODO: Add support for variants
+   * Variants are after the asset.
+   * 
+   * 
+   * NOTE: Assets only need the cid now.
+   * 
+   * 
    * [
    *  {
    *    ownedVariantTags:{
@@ -72,24 +77,27 @@ class Member extends LauncherMember {
    * ]
    */
 
-  async setOutfit(asset, key) {
+  async setOutfit(asset, variants) {
     await this.meta.setCosmeticLoadout({
-      characterDef: asset,
-      characterEKey: key || '',
+      characterDef: `/Game/Athena/Items/Cosmetics/Characters/${asset}.${asset}`,
+      characterEKey: '',
+      variants: variants || '',
     });
   }
 
-  async setBackpack(asset, key) {
+  async setBackpack(asset, variants) {
     await this.meta.setCosmeticLoadout({
-      backpackDef: asset,
-      backpackEKey: key || '',
+      backpackDef: `/Game/Athena/Items/Cosmetics/Backpacks/${asset}.${asset}`,
+      backpackEKey: '',
+      variants: variants
     });
   }
 
-  async setPickaxe(asset, key) {
+  async setPickaxe(asset, variants) {
     await this.meta.setCosmeticLoadout({
-      pickaxeDef: asset,
-      pickaxeEKey: key || '',
+      pickaxeDef: `/Game/Athena/Items/Cosmetics/Pickaxes/${asset}.${asset}`,
+      pickaxeEKey: '',
+      variants: variants,
     });
   }
 
