@@ -1,5 +1,5 @@
 {
-	"name": "epicgames-fortnite-client",
+	"name": "node-epicgames-fortnite-client",
 	"version": "2.0.17",
 	"description": "Unofficial Fortnite client in javascript.",
 	"main": "index.js",
@@ -9,16 +9,16 @@
 		"client",
 		"api"
 	],
-	"homepage": "https://github.com/SzymonLisowiec/node-epicgames-fortnite-client",
+	"homepage": "https://github.com/Kekisatan/node-epicgames-fortnite-client",
 	"bugs": {
-		"url": "https://github.com/SzymonLisowiec/node-epicgames-fortnite-client/issues"
+		"url": "https://github.com/Kekisatan/node-epicgames-fortnite-client/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/SzymonLisowiec/node-epicgames-fortnite-client.git"
+		"url": "https://github.com/Kekisatan/node-epicgames-fortnite-client.git"
 	},
 	"author": {
-		"name": "Szymon Lisowiec",
+		"name": "Szymon Lisowiec, Kekistanz",
 		"url": "https://kysune.me"
 	},
 	"license": "MIT",
