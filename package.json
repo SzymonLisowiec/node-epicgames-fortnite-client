@@ -23,7 +23,7 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"epicgames-client": "^2.0.17",
+    "epicgames-client": "git+https://github.com/Kekisatan/node-epicgames-client.git",
 		"request": "^2.88.0",
 		"websocket": "^1.0.28"
 	},
