@@ -184,8 +184,8 @@ class MemberMeta extends LauncherMemberMeta {
     });
   }
 
-  async stateCheck(state) {
-    return this.get('GameReadiness_s') === state || 'not found.'
+  async currentState() {
+    return this.get('GameReadiness_s');
   }
   
 }

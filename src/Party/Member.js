@@ -2,8 +2,8 @@ const LauncherMember = require('epicgames-client/src/Party/Member');
 
 class Member extends LauncherMember {
 
-  stateCheck(state) {
-    return this.meta.stateCheck(state);
+  currentState() {
+    return this.meta.currentState();
   }
 
   async setState(...args) {
@@ -77,29 +77,55 @@ class Member extends LauncherMember {
    * ]
    */
 
-  async setOutfit(asset, variants) {
-    await this.meta.setCosmeticLoadout({
-      characterDef: `/Game/Athena/Items/Cosmetics/Characters/${asset}.${asset}`,
-      characterEKey: '',
-      variants: variants || '',
-    });
+  async setVariant(asset, variant) {
+
+    if(asset.startsWith("CID") ) {
+     await this.meta.setCosmeticLoadout({
+       characterDef: `/Game/Athena/Items/Cosmetics/Characters/${asset}.${asset}`,
+       characterEKey: '',
+       variants: variant || '',
+     });
+   }
+
+   if(asset.startsWith("BID") ) {
+     await this.meta.setCosmeticLoadout({
+       backpackDef: `/Game/Athena/Items/Cosmetics/Backpacks/${asset}.${asset}`,
+       backpackEKey: '',
+       variants: variant || '',
+     });
+   }
+
+   if(asset.startsWith("Pickaxe_ID_") ) {
+     await this.meta.setCosmeticLoadout({
+       pickaxeDef: `/Game/Athena/Items/Cosmetics/Pickaxes/${asset}.${asset}`,
+       pickaxeEKey: '',
+       variants: variant || '',
+     });
+   }
+
   }
 
-  async setBackpack(asset, variants) {
-    await this.meta.setCosmeticLoadout({
-      backpackDef: `/Game/Athena/Items/Cosmetics/Backpacks/${asset}.${asset}`,
-      backpackEKey: '',
-      variants: variants
-    });
-  }
+ async setOutfit(asset) {
+   await this.meta.setCosmeticLoadout({
+     characterDef: `/Game/Athena/Items/Cosmetics/Characters/${asset}.${asset}`,
+     characterEKey: '',
+   });
+ }
 
-  async setPickaxe(asset, variants) {
-    await this.meta.setCosmeticLoadout({
-      pickaxeDef: `/Game/Athena/Items/Cosmetics/Pickaxes/${asset}.${asset}`,
-      pickaxeEKey: '',
-      variants: variants,
-    });
-  }
+ async setBackpack(asset) {
+   await this.meta.setCosmeticLoadout({
+     backpackDef: `/Game/Athena/Items/Cosmetics/Backpacks/${asset}.${asset}`,
+     backpackEKey: ''
+   });
+ }
+
+ async setPickaxe(asset) {
+   await this.meta.setCosmeticLoadout({
+     pickaxeDef: `/Game/Athena/Items/Cosmetics/Pickaxes/${asset}.${asset}`,
+     pickaxeEKey: ''
+   });
+ }
+
 
 }
 
