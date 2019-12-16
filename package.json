@@ -17,10 +17,6 @@
 		"type": "git",
 		"url": "https://github.com/Kekisatan/node-epicgames-fortnite-client.git"
 	},
-	"author": {
-		"name": "Szymon Lisowiec, Kekistanz",
-		"url": "https://kysune.me"
-	},
 	"license": "MIT",
 	"dependencies": {
 		"request": "^2.88.0",
