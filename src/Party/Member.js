@@ -2,13 +2,13 @@ const LauncherMember = require('epicgames-client/src/Party/Member');
 
 class Member extends LauncherMember {
 
-  isReady() {
-    return this.meta.isReady();
+  stateCheck(state) {
+    return this.meta.stateCheck(state);
   }
 
-  async setReady(...args) {
+  async setState(...args) {
     this.checkPermissions();
-    await this.meta.setReady(...args);
+    await this.meta.setState(...args);
   }
 
   async setInputType(...args) {

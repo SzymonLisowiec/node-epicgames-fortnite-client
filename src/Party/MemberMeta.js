@@ -176,17 +176,18 @@ class MemberMeta extends LauncherMemberMeta {
     });
   }
 
-  async setReady(ready) {
+  async setState(state) {
+    var newstate = States[state] || 'NotReady';
     await this.member.patch({
-      GameReadiness_s: this.set('GameReadiness_s', ready === true ? 'Ready' : 'NotReady'),
+      GameReadiness_s: this.set('GameReadiness_s', newstate),
       ReadyInputType_s: this.get('CurrentInputType_s'),
     });
   }
 
-  async isReady() {
-    return this.get('GameReadiness_s') === 'Ready';
+  async stateCheck(state) {
+    return this.get('GameReadiness_s') === state || 'not found.'
   }
-
+  
 }
 
 module.exports = MemberMeta;
