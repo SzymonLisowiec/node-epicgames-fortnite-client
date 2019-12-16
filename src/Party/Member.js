@@ -79,7 +79,7 @@ class Member extends LauncherMember {
 
   async setVariant(asset, variant) {
 
-    if(asset.startsWith("CID") ) {
+    if(asset.startsWith("CID") || asset.startsWith("cid")) {
      await this.meta.setCosmeticLoadout({
        characterDef: `/Game/Athena/Items/Cosmetics/Characters/${asset}.${asset}`,
        characterEKey: '',
@@ -87,7 +87,7 @@ class Member extends LauncherMember {
      });
    }
 
-   if(asset.startsWith("BID") ) {
+   if(asset.startsWith("BID") || asset.startsWith("bid") ) {
      await this.meta.setCosmeticLoadout({
        backpackDef: `/Game/Athena/Items/Cosmetics/Backpacks/${asset}.${asset}`,
        backpackEKey: '',
@@ -95,7 +95,7 @@ class Member extends LauncherMember {
      });
    }
 
-   if(asset.startsWith("Pickaxe_ID_") ) {
+   if(asset.startsWith("Pickaxe_ID_") || asset.startsWith("pickaxe_id_") ) {
      await this.meta.setCosmeticLoadout({
        pickaxeDef: `/Game/Athena/Items/Cosmetics/Pickaxes/${asset}.${asset}`,
        pickaxeEKey: '',
