@@ -6,6 +6,26 @@ class Member extends LauncherMember {
     return this.meta.currentState();
   }
 
+    /**
+     * Available States
+     * 
+     * 
+     * ⸻⸻⸻
+     * 
+     * * NotReady
+     * 
+     * * Ready
+     * 
+     * * SittingOut
+     * 
+     * ⸻⸻⸻
+     * 
+     * All of these of have to have the same uppercases.
+     * 
+     * Thank you for using this lib!
+   */
+
+
   async setState(...args) {
     this.checkPermissions();
     await this.meta.setState(...args);
