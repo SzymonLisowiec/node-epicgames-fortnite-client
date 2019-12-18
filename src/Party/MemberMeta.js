@@ -40,7 +40,7 @@ class MemberMeta extends LauncherMemberMeta {
       }),
       NumAthenaPlayersLeft_U: '0',
       UtcTimeStartedMatchAthena_s: '0001-01-01T00:00:00.000Z',
-      GameReadiness_s: 'NotReady',
+      GameReadiness_s: 'SittingOut',
       HiddenMatchmakingDelayMax_U: '0',
       ReadyInputType_s: 'Count',
       CurrentInputType_s: 'MouseAndKeyboard',
