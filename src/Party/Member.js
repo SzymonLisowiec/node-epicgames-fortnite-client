@@ -27,7 +27,9 @@ class Member extends LauncherMember {
 
 
   async setState(...args) {
+    let state = await this.meta.setState(...args);
     this.checkPermissions();
+    if(state == args) throw new Error ("Already on that State!")
     await this.meta.setState(...args);
   }
 
@@ -53,6 +55,7 @@ class Member extends LauncherMember {
 
   async clearEmote() {
     this.checkPermissions();
+    // Not needed anymore.
     await this.meta.setEmote({
       emoteItemDef: 'None',
     });
