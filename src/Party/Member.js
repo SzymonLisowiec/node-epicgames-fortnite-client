@@ -44,6 +44,9 @@ class Member extends LauncherMember {
   async setEmote(asset) {
     this.checkPermissions();
     await this.meta.setEmote({
+      emoteItemDef: 'None',
+    });
+    await this.meta.setEmote({
       emoteItemDef: `/Game/Athena/Items/Cosmetics/Dances/${asset}.${asset}`,
     });
   }
