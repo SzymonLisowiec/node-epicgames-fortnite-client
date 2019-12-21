@@ -7,23 +7,9 @@ class Member extends LauncherMember {
   }
 
     /**
-     * Available States
-     * 
-     * 
-     * ⸻⸻⸻
-     * 
-     * * NotReady
-     * 
-     * * Ready
-     * 
-     * * SittingOut
-     * 
-     * ⸻⸻⸻
-     * 
-     * All of these of have to have the same uppercases.
-     * 
-     * Thank you for using this lib!
-   */
+     * The user's state.
+    * @param {string} state, either SittingOut, Ready, or NotReady, if incorrect sets to NotReady.
+    */
 
 
   async setState(...args) {
