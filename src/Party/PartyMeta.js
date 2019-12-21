@@ -22,7 +22,7 @@ class PartyMeta extends LauncherPartyMeta {
       CustomMatchKey_s: '',
       PlaylistData_j: JSON.stringify({
         PlaylistData: {
-          playlistName: 'Playlist_DefaultDuo',
+          playlistName: 'Playlist_DefaultSolo',
           tournamentId: '',
           eventWindowId: '',
           regionId: 'EU',
