@@ -8,7 +8,7 @@ class Member extends LauncherMember {
 
     /**
      * The user's state.
-    * @param {string} state, either SittingOut, Ready, or NotReady, if incorrect sets to NotReady.
+    * @param {string} state, either `SittingOut`, `Ready`, or `NotReady`, incorrect sets to NotReady.
     */
 
 
