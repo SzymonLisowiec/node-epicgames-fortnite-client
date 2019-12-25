@@ -177,6 +177,7 @@ class MemberMeta extends LauncherMemberMeta {
   }
 
   async setState(state) {
+    var States = require('../../enums/States')
     var newstate = States[state] || 'NotReady';
     await this.member.patch({
       GameReadiness_s: this.set('GameReadiness_s', newstate),
