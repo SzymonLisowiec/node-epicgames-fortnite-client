@@ -7,14 +7,14 @@ class MemberMeta extends LauncherMemberMeta {
     super(member);
 
     const defaultCharacters = [
-      'CID_001_Athena_Commando_F_Default',
-      'CID_002_Athena_Commando_F_Default',
-      'CID_003_Athena_Commando_F_Default',
-      'CID_004_Athena_Commando_F_Default',
-      'CID_005_Athena_Commando_M_Default',
-      'CID_006_Athena_Commando_M_Default',
-      'CID_007_Athena_Commando_M_Default',
-      'CID_008_Athena_Commando_M_Default',
+      'CID_556_Athena_Commando_F_RebirthDefaultA',
+      'CID_557_Athena_Commando_F_RebirthDefaultB',
+      'CID_558_Athena_Commando_F_RebirthDefaultC',
+      'CID_559_Athena_Commando_F_RebirthDefaultD',
+      'CID_560_Athena_Commando_M_RebirthDefaultA',
+      'CID_561_Athena_Commando_M_RebirthDefaultB',
+      'CID_562_Athena_Commando_M_RebirthDefaultC',
+      'CID_563_Athena_Commando_M_RebirthDefaultD',
     ];
 
     const character = defaultCharacters[Math.floor(Math.random() * defaultCharacters.length)];
@@ -35,7 +35,7 @@ class MemberMeta extends LauncherMemberMeta {
         FrontendEmote: {
           emoteItemDef: 'None',
           emoteItemDefEncryptionKey: '',
-          emoteSection: -1,
+          emoteSection: 1,
         },
       }),
       NumAthenaPlayersLeft_U: '0',
