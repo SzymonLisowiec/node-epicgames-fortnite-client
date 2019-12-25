@@ -240,11 +240,11 @@ class App extends Application {
     return false;
   }
 
-  async requestMCP(action, profileId, payload, rvn) {
+  async requestMCP(action, profileId, payload, rvn, url) {
 
     const { data } = await this.http.send(
       'POST',
-      `${ENDPOINT.MCP_PROFILE}/${this.launcher.account.id}/client/${action}?profileId=${profileId}&rvn=${rvn || -1}&leanResponse=true`,
+      `${url || ENDPOINT.MCP_PROFILE}/${this.launcher.account.id}/client/${action}?profileId=${profileId}&rvn=${rvn || -1}&leanResponse=true`,
       `${this.auth.tokenType} ${this.auth.accessToken}`,
       payload || {},
     );
