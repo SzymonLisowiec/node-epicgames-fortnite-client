@@ -39,6 +39,15 @@ class Member extends LauncherMember {
     });
   }
 
+  async setEmoji(asset) {
+    await this.meta.setEmote({
+      emoteItemDef: 'None',
+    });
+    await this.meta.setEmote({
+      emoteItemDef: `/Game/Athena/Items/Cosmetics/Dances/Emoji/${asset}.${asset}`,
+    });
+  }
+
   async clearEmote() {
     this.checkPermissions();
     // Not needed anymore.
