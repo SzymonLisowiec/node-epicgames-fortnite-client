@@ -65,7 +65,7 @@ class Http {
 
             default:
               // eslint-disable-next-line no-console
-              if (process.env.KYSUNE) console.dir(body);
+              if (body.errorCode === 'errors.com.epicgames.social.party.member_not_found') break;
               reject(new Error(body.errorCode));
               break;
 
