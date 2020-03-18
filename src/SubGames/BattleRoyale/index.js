@@ -100,10 +100,8 @@ class BattleRoyaleSubGame extends SubGame {
    * Returns list of store items.
    */
   getStoreItems() {
-    return [
-      ...this.fn.storeCatalog.storefronts.find(sf => sf.name === 'BRWeeklyStorefront').catalogEntries,
-      ...this.fn.storeCatalog.storefronts.find(sf => sf.name === 'BRDailyStorefront').catalogEntries,
-    ];
+    const storefronts = this.fn.storeCatalog.storefronts.filter(sf => sf.name.substr(0, 2) === 'BR');
+    return [].concat(...storefronts.map(storefront => storefront.catalogEntries));
   }
 
   /**
